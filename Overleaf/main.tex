@@ -1,14 +1,14 @@
 %\RequirePackage[2020-02-02]{latexrelease}
 \documentclass[a4paper,twoside,12pt]{report}
  %openright
-\input{Setup/Statics.tex}
-\input{Setup/Preamble.tex}
-\input{Setup/Settings.tex}
+\input{Overleaf/Setup/Statics.tex}
+\input{Overleaf/Setup/Preamble.tex}
+\input{Overleaf/Setup/Settings.tex}
 
 \begin{document}
 
 \pagenumbering{roman}
-\input{Frontmatter/Frontpage.tex}
+\input{Overleaf/Frontmatter/Frontpage.tex}
 \pagecolor{white}
 \newgeometry{top=2.70cm, bottom=2.70cm, outer=2.5cm, inner=2.5cm}
 \pagestyle{plain}
@@ -21,17 +21,17 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \pagenumbering{arabic}
-\subfile{Chapters/01_Introduktion}
+\subfile{Overleaf/Chapters/01_Introduktion}
 \clearpage
-\subfile{Chapters/02_Analyse}
+\subfile{Overleaf/Chapters/02_Analyse}
 \clearpage
-\subfile{Chapters/03_Design}
+\subfile{Overleaf/Chapters/03_Design}
 \clearpage
-\subfile{Chapters/04_Implementering}
+\subfile{Overleaf/Chapters/04_Implementering}
 \clearpage
-\subfile{Chapters/05_Test}
+\subfile{Overleaf/Chapters/05_Test}
 \clearpage
-\subfile{Chapters/06_Konklusion}
+\subfile{Overleaf/Chapters/06_Konklusion}
 \clearpage
 %\subfile{Chapters/08_Colours}
 %\clearpage
@@ -44,12 +44,12 @@
 \clearpage
 \appendix
 \chapter{Appendiks}
-\input{Backmatter/01_Gantt.tex}
+\input{Overleaf/Backmatter/01_Gantt.tex}
 \clearpage
-\input{Backmatter/02_Beregninger.tex}
+\input{Overleaf/Backmatter/02_Beregninger.tex}
 \clearpage
-\input{Backmatter/03_Figure.tex}
+\input{Overleaf/Backmatter/03_Figure.tex}
 \clearpage
-\input{Backmatter/04_VHDL}
+\input{Overleaf/Backmatter/04_VHDL}
 \clearpage
 \end{document}
