@@ -11,8 +11,16 @@ int main(void)
 {   
     sei();
     init_fast_pwm();
-    OCR1A = 512;
+    OCR1A = 0;
     
     
-    while(1);
+    while(1) {
+        OCR1A++;
+        _delay_ms(20);
+        if (OCR1A >= 1023)
+        {
+            OCR1A = 0;
+        }
+        
+    };
 }
