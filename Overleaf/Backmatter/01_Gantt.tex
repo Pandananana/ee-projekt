@@ -1,0 +1,57 @@
+\section{Planlægning}
+
+\subsection{Gantt-skema}
+\renewcommand{\arraystretch}{1.5}
+\resizebox{\textwidth}{!}{%
+    \begin{tabular}{|l|m{0.035\textwidth}|m{0.035\textwidth}|m{0.035\textwidth}|m{0.035\textwidth}|m{0.035\textwidth}||m{0.035\textwidth}|m{0.035\textwidth}|m{0.035\textwidth}|m{0.035\textwidth}|m{0.035\textwidth}||m{0.035\textwidth}|m{0.035\textwidth}|m{0.035\textwidth}|m{0.035\textwidth}|m{0.035\textwidth}|m{0.035\textwidth}|m{0.035\textwidth}|m{0.035\textwidth}|m{0.035\textwidth}|m{0.035\textwidth}|}
+\hline
+\rowcolor[HTML]{C0C0C0}
+Januar      & 2 & 3 & 4 & 5 & 6 & 9 & 10 & 11 & 12 & 13 & 16 & 17 & 18 & 19 & 20 & 21 & 22 \\ \hline
+Research    & \cellcolor{black} & \cellcolor{black} & \cellcolor{black} & \cellcolor{black} &                 \cellcolor{black} & & & & & & & & & & & & \\ \hline
+Beregninger & \cellcolor{black}&\cellcolor{black} &\cellcolor{black} & & & & & & & & & & & & & & \\ \hline
+3D-print    & & &\cellcolor{black} &\cellcolor{black} & & &\cellcolor{black} & & & & & &\cellcolor{black} &\cellcolor{black} & & & \\ \hline
+TX PA       & & &\cellcolor{black} &\cellcolor{black} & \cellcolor{black}& \cellcolor{black}& & & & & & & & & & & \\ \hline
+RX AMP      & & & & & &\cellcolor{black} &\cellcolor{black} & \cellcolor{black}& \cellcolor{black}& & & & & & & & \\ \hline
+Kode        & &\cellcolor{black} &\cellcolor{black} & \cellcolor{black}&\cellcolor{black} &\cellcolor{black} &\cellcolor{black} &\cellcolor{black} & & & & & & & & & \\ \hline
+PCB         & & & & & & & & & &\cellcolor{black} &\cellcolor{black} &\cellcolor{black} &\cellcolor{black} & & & & \\ \hline
+Tests       & & & & & &\cellcolor{black} & & &\cellcolor{black} & & & & &\cellcolor{black} & & & \\ \hline
+PowerPoint  & & & & & & & & & & & & & & \cellcolor{black} & & & \\ \hline
+Rapport     & & & & & \cellcolor{black} & \cellcolor{black} & \cellcolor{black} & \cellcolor{black} & \cellcolor{black} & \cellcolor{black} & \cellcolor{black} & \cellcolor{black} & \cellcolor{black} & \cellcolor{black} & \cellcolor{black} & \cellcolor{black} & \cellcolor{black}\\ \hline
+    \end{tabular}}
+
+\subsection{Tidsforbrug/fokusområde}
+\begin{figure}[!h]
+    \centering
+    \begin{tikzpicture}
+        \pie[radius = 2,                            %Anders
+             hide number,
+             rotate =90,
+             color={red, yellow, green,blue,black}]
+                 {10/{}, 20/{}, 20/{}, 40/{}, 15/{}}    %percent
+        \pie[pos={5,0},                             %Nikolaj
+             radius = 2,
+             hide number,
+             rotate = 90,
+             color={red,yellow,green,blue,black}]
+             {15/{}, 25/{}, 10/{}, 17/{}, 33/{}} %percent
+        \pie[pos={10,0},                            %Simon
+             radius = 2,
+             hide number,
+             rotate = 90,
+             color={red,yellow,green,blue,black}]
+             {20/{},5/{},45/{},20/{},10/{}}    %percent
+        \node at (0,2.5)    {\textbf{Anders}};
+        \node at (5,2.5)    {\textbf{Nikolaj}};
+        \node at (10,2.5)   {\textbf{Simon}};
+    \end{tikzpicture}
+\end{figure}
+
+\noindent\fbox{%
+    \parbox{3cm}{%
+    \fcolorbox{black}{red}{\phantom{X}}     Research    \\
+    \fcolorbox{black}{yellow}{\phantom{X}}  Produktion  \\
+    \fcolorbox{black}{green}{\phantom{X}}   Software    \\
+    \fcolorbox{black}{blue}{\phantom{X}}    Hardware    \\
+    \fcolorbox{black}{black}{\phantom{X}}   Rapport
+    }%
+}
