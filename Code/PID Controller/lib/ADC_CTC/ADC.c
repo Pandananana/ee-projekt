@@ -12,6 +12,7 @@ void CTC_Timer0_init(){
 
 }
 void ADC_init(){
+    DDRB |= (1<<PB4);
     CTC_Timer0_init();
 	ADCSRB = (1<<ADTS1)|(1<<ADTS0);//Timer/Counter0 Compare Match A
 	ADCSRA |= (1<<ADEN)|(1<<ADPS2)|(1<<ADPS1)|(1<<ADPS0)|(1<<ADIE)|(1<<ADATE);
@@ -29,6 +30,6 @@ ISR(TIMER0_COMPA_vect){
 ISR(ADC_vect){ // Runs when a new ADC reading is ready
     ADC_new[2] = ADC_new[1];
     ADC_new[1] = ADC_new[0];
-    ADC_new[0] = 30.0/1023*ADC;
+    ADC_new[0] = ADC;
     flag_ADC = 1;
 }
