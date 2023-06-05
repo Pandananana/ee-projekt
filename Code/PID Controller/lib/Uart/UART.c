@@ -39,6 +39,4 @@ void putsUART0(char *ptr){
 
 void UART0_RX_INT_Init(){
 	UCSR0B |= (1<<RXCIE0); // Enable interupt at UART0
-	sei();
-	
 }

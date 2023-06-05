@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "adc.h": "c"
+        "adc.h": "c",
+        "interrupt.h": "c",
+        "io.h": "c"
     }
 }

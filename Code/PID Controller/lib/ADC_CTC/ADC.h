@@ -5,9 +5,9 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-// Declare global varibel
+// // Declare global varibel
 uint16_t ADC_new[3];
-uint8_t flag_ADC;
+volatile uint8_t flag_ADC;
 
 // Declare functions
 void CTC_Timer0_init();
