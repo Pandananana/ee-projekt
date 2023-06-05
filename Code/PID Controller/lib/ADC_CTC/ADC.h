@@ -6,7 +6,7 @@
 #include <avr/interrupt.h>
 
 // Declare global varibel
-uint16_t ADC_new;
+uint16_t ADC_new[3];
 uint8_t flag_ADC;
 
 // Declare functions
