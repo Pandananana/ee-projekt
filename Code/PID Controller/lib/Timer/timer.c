@@ -39,3 +39,4 @@ void init_fast_pwm() {
 	// Set prescaling to 1
 	TCCR1B |= (1<<CS10);
 }
+
