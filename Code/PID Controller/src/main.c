@@ -16,9 +16,9 @@
 #define BAUD 19200
 #define MYUBBRF F_CPU/8/BAUD-1
 
-
-
-
+int dc2tc(float duty_cycle){
+    return round(duty_cycle/100*1023);
+}
 
 void init(){
     
@@ -36,9 +36,17 @@ void init(){
     //putsUART0(send);
 }
 
-
 int main(void)
 {   
+    sei();
+    init_fast_pwm();
+    DDRB |= (1<<PB4);
+    PORTB = 0;
+    OCR1A = dc2tc(50);
+    _delay_ms(5000);
+    PORTB |= (1<<PB4);
+    OCR1A = dc2tc(60);
+
     init();
     char send[10];
     
