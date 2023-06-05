@@ -1,6 +1,6 @@
 #include "ADC.h"
 
-uint16_t ADC_new[3] = {0,0,0};
+uint16_t ADC_new = 0;
 volatile uint8_t flag_ADC = 0;
 
 void CTC_Timer0_init(){
@@ -25,8 +25,6 @@ ISR(TIMER0_COMPA_vect){
 
 
 ISR(ADC_vect){ // Runs when a new ADC reading is ready
-    ADC_new[2] = ADC_new[1];
-    ADC_new[1] = ADC_new[0];
-    ADC_new[0] = ADC;
+    ADC_new = ADC;
     flag_ADC = 1;
 }
