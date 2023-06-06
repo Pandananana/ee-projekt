@@ -37,8 +37,8 @@ int main(void)
     double y[3] = {0,0,0};
     double u[3] = {0,0,0};
 
-    OCR1A = 300;
-    _delay_ms(2000);
+    OCR1A = 665;
+    _delay_ms(10000);
 
     int ref = 512;
 
@@ -59,9 +59,9 @@ int main(void)
             uvals = 10.49 * u[0] - 20.96 * u[1] + 10.47 * u[2];
             yvals = 1.993 * y[1] - 0.9928 * y[2];
             y[0] = uvals + yvals;
-            dtostrf((int)y[0], 4, 2, send);
-            sprintf(send, "%s\n", &send);
-            putsUART0(send);
+            // dtostrf((int)y[0], 4, 2, send);
+            // sprintf(send, "%s\n", &send);
+            // putsUART0(send);
             OCR1A = (int)y[0];
             flag_ADC=0;
         }   
