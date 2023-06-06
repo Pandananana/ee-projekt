@@ -29,8 +29,12 @@ int main(void)
 {
     init();
     sei();
+    DDRB |= (1<<PB4);
+    OCR1B = 65;
+    _delay_ms(5000);
+    PORTB |= (1<<PB4);
+    OCR1B = 75;
 
-    OCR1B = 60;
 }
 
 
