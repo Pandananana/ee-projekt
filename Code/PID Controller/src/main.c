@@ -33,12 +33,12 @@ int main(void)
 
     char send[6];
 
-    double uvals, yvals = 0;
-    double y[3] = {0,0,0};
-    double u[3] = {0,0,0};
+    float uvals = 0, yvals = 0;
+    float y[3] = {0.0,0.0,0.0};
+    float u[3] = {0.0,0.0,0.0};
 
-    OCR1A = 665;
-    _delay_ms(10000);
+    OCR1A = 300;
+    _delay_ms(2000);
 
     int ref = 512;
 
@@ -46,13 +46,7 @@ int main(void)
     {
         if (flag_ADC==1)
         {
-            // Cycling outputs
-            y[2] = y[1];
-            y[1] = y[0];
-
-            // Cycling inputs
-            u[2] = u[1];
-            u[1] = u[0];
+            // Find error
             u[0] = ref - ADC_new;
 
             // Calculate output
@@ -63,6 +57,15 @@ int main(void)
             // sprintf(send, "%s\n", &send);
             // putsUART0(send);
             OCR1A = (int)y[0];
+
+            // Cycling outputs
+            y[2] = y[1];
+            y[1] = y[0];
+
+            // Cycling inputs
+            u[2] = u[1];
+            u[1] = u[0];
+
             flag_ADC=0;
         }   
     }
