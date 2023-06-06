@@ -14,7 +14,6 @@
 void init()
 {
     init_fast_pwm();
-    OCR1A = 0;
 
     // ADC set uo
     ADC_init();
@@ -37,10 +36,10 @@ int main(void)
     float y[3] = {0.0,0.0,0.0};
     float u[3] = {0.0,0.0,0.0};
 
-    OCR1A = 300;
-    _delay_ms(2000);
+    OCR1B = 30;
+    _delay_ms(5000);
 
-    int ref = 512;
+    int ref = 800;
 
     while (1)
     {
@@ -50,13 +49,13 @@ int main(void)
             u[0] = ref - ADC_new;
 
             // Calculate output
-            uvals = 10.49 * u[0] - 20.96 * u[1] + 10.47 * u[2];
-            yvals = 1.993 * y[1] - 0.9928 * y[2];
+            uvals = 2.447 * u[0] - 4.888 * u[1] + 2.441 * u[2];
+            yvals = 1.996 * y[1] - 0.9964 * y[2];
             y[0] = uvals + yvals;
             // dtostrf((int)y[0], 4, 2, send);
             // sprintf(send, "%s\n", &send);
             // putsUART0(send);
-            OCR1A = (int)y[0];
+            OCR1B = (int)y[0];
 
             // Cycling outputs
             y[2] = y[1];
