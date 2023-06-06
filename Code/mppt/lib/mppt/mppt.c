@@ -1,7 +1,7 @@
 #include <avr/io.h>
 #include "mppt.h"
 
-int pwm_range = 255; // timer0 8 bit 0-255
+int pwm_range = 320;
 
 int calculatePower(uint16_t adcVoltage, uint16_t current) {
 	return adcVoltage * current;
