@@ -33,10 +33,10 @@ void init_pc_pwm() {
 
 void init_fast_pwm() {
     // Set data direction on pinb6 to output
-	DDRB |= (1<<PB5);
+	DDRB |= (1<<PB6);
     // Set Wave Gen Mode to Fast PWM
-	TCCR1A |= (1<<WGM12)|(1<<WGM11)|(1<<WGM10)|(1<<COM1A1);
+	TCCR1A |= (1<<WGM11)|(1<<WGM10)|(1<<COM1B1);
 	// Set prescaling to 1
-	TCCR1B |= (1<<CS10);
+	TCCR1B |= (1<<WGM13)|(1<<WGM12)|(1<<CS10);
 }
 

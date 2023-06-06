@@ -13,7 +13,7 @@ void CTC_Timer0_init(){
 void ADC_init(){
     CTC_Timer0_init();
 	ADCSRB = (1<<ADTS1)|(1<<ADTS0);//Timer/Counter0 Compare Match A
-	ADCSRA |= (1<<ADEN)|(1<<ADPS1)|(1<<ADPS0)|(1<<ADIE)|(1<<ADATE);
+	ADCSRA |= (1<<ADEN)|(1<<ADPS2)|(1<<ADPS1)|(0<<ADPS0)|(1<<ADIE)|(1<<ADATE);
 	ADMUX = (1<<REFS0); //Sample on ADC 0 ore pin A0
     DDRF &= (0<<DDF0); //ADC signal on pin A0
 }
