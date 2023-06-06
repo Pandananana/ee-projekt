@@ -30,7 +30,7 @@ int main(void)
     init();
     sei();
 
-    OCR1B = 50;
+    OCR1B = 60;
 }
 
 
