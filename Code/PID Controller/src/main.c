@@ -17,7 +17,7 @@ void init()
 
     // ADC set uo
     ADC_init();
-    
+
     // Uart set up
     uart0_Init(MYUBBRF);
     char send[32];
@@ -30,32 +30,49 @@ int main(void)
     init();
     sei();
 
-    char send[6];
+    char send[20];
+    uint16_t terminal[1000], test_count = 0;
 
-    float uvals = 0, yvals = 0;
-    float y[3] = {0.0,0.0,0.0};
-    float u[3] = {0.0,0.0,0.0};
+    double uvals = 0, yvals = 0;
+    double y[3] = {0.0, 0.0, 0.0};
+    double u[3] = {0.0, 0.0, 0.0};
 
-    OCR1B = 30;
+    double num[3] = {
+        0.2192639,
+        -0.2191587,
+        0
+    };
+
+    double den[3] = {
+        1,
+        -1,
+        0
+    };
+
+    OCR1B = 71;
     _delay_ms(5000);
+    DDRB |= (1<<PB4);
 
-    int ref = 800;
+    uint16_t ref = 500;
 
     while (1)
     {
-        if (flag_ADC==1)
+        if (flag_ADC == 1)
         {
+            PORTB ^= (1<<PB4);
             // Find error
             u[0] = ref - ADC_new;
 
             // Calculate output
-            uvals = 2.447 * u[0] - 4.888 * u[1] + 2.441 * u[2];
-            yvals = 1.996 * y[1] - 0.9964 * y[2];
+            uvals = num[0] * u[0] + num[1] * u[1] + num[2] * u[2];
+            yvals = -den[1] * y[1] - den[2] * y[2];
             y[0] = uvals + yvals;
-            // dtostrf((int)y[0], 4, 2, send);
-            // sprintf(send, "%s\n", &send);
-            // putsUART0(send);
+            
             OCR1B = (int)y[0];
+            
+            // dtostrf(y[0], 4, 2, send);
+            // sprintf(send, "%d\n", ADC_new);
+            // putsUART0(send);
 
             // Cycling outputs
             y[2] = y[1];
@@ -65,10 +82,19 @@ int main(void)
             u[2] = u[1];
             u[1] = u[0];
 
-            flag_ADC=0;
-        }   
+            flag_ADC = 0;
+
+            // if ((test_count > 999))
+            // {
+            //     sprintf(send, "\nDEBUG");
+            //     putsUART0(send);
+            //     for (uint16_t i = 0; i < 1000; i++)
+            //     {
+            //         sprintf(send, "%i\n", terminal[i]);
+            //         putsUART0(send);
+            //     }
+            //     test_count = 0;
+            // }
+        }
     }
 }
-
-
-
