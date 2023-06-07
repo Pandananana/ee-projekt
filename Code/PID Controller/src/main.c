@@ -31,7 +31,6 @@ int main(void)
     sei();
 
     char send[32];
-    // uint16_t terminal[1000], test_count = 0;
 
     /*double uvals = 0, yvals = 0;
     double y[3] = {0.0, 0.0, 0.0};
@@ -59,23 +58,43 @@ int main(void)
     float P_Term;
     float I_Term;
     float D_Term;
-    int new_ADC_value;
-    float PWM_Duty;
-    float Kp = 0.13*2, Ki = 1, Kd = 0.5;
+    float Kp = 12.4, Ki = 0.1, Kd = 0.2;
     float d_Temp = 0;
     int i_Temp = 0;
     int PWM_Temp = 10;
-    int ref = 512;
+    int ref = 520;
 
     while (1)
     {
         if (flag_ADC == 1)
         {
             Err_Value = (ref - ADC_new);
+            
             P_Term = Kp * Err_Value;
+            //test_count++;
+
+            // if (test_count >= 60000)
+            // {
+            //     OCR1B = 0;
+            //     _delay_ms(5000);
+            //     Kp = Kp + 0.1;
+            //     test_count=0;
+            //     dtostrf(Kp, 4, 2, send);
+            //     putsUART0(send);
+            //     sprintf(send,",%d\n", OCR1B);
+            //     putsUART0(send);
+            // }
+            
+            // OCR1B = round(P_Term);
+
             D_Term = Kd * (d_Temp - Err_Value);
             d_Temp = Err_Value;
             i_Temp = i_Temp + Err_Value;
+
+            // if (abs(i_Temp) < 50)
+            // {
+            //     i_Temp = 0;
+            // }
 
             if (i_Temp > iMax)
             {
@@ -90,14 +109,9 @@ int main(void)
 
             PWM_Temp = (P_Term + I_Term);
 
-            if (PWM_Temp < 0)
-            {
-                PWM_Temp = 0;
-            }
-
-            sprintf(send, "%i,%i,%i\n", (int)PWM_Temp, Err_Value, i_Temp);
-            putsUART0(send);
-            OCR1B = (int)PWM_Temp;
+            // sprintf(send, "%d,%d,%d\n", round(PWM_Temp), round(P_Term), round(I_Term));
+            // putsUART0(send);
+            OCR1B = round(PWM_Temp);
 
 
             flag_ADC = 0;
