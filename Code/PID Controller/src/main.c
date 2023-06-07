@@ -20,9 +20,9 @@ void init()
 
     // Uart set up
     uart0_Init(MYUBBRF);
-    //char send[32];
-    // sprintf(send,"init");
-    // putsUART0(send);
+    // char send[32];
+    //  sprintf(send,"init");
+    //  putsUART0(send);
 }
 
 int main(void)
@@ -31,7 +31,7 @@ int main(void)
     sei();
 
     char send[32];
-    //uint16_t terminal[1000], test_count = 0;
+    // uint16_t terminal[1000], test_count = 0;
 
     /*double uvals = 0, yvals = 0;
     double y[3] = {0.0, 0.0, 0.0};
@@ -49,80 +49,83 @@ int main(void)
         0
     };
     */
-    OCR1B = 1;
-    _delay_ms(5000);
-    DDRB |= (1<<PB4);
+    OCR1B = 0;
+    _delay_ms(1000);
+    DDRB |= (1 << PB4);
 
-    float iMax = 1000;
-    float iMin = -1000;
+    float iMax = 200;
+    float iMin = -200;
     int Err_Value;
     float P_Term;
     float I_Term;
     float D_Term;
     int new_ADC_value;
     float PWM_Duty;
-    float Kp = 0.139,Ki = 0.2, Kd = 0;
+    float Kp = 0.13*2, Ki = 1, Kd = 0.5;
     float d_Temp = 0;
-    float i_Temp = 0;
-    uint16_t PWM_Temp= 10;
-    uint16_t ref = 512;
+    int i_Temp = 0;
+    int PWM_Temp = 10;
+    int ref = 512;
 
     while (1)
     {
         if (flag_ADC == 1)
         {
-            //new_ADC_value = ADC_new;
             Err_Value = (ref - ADC_new);
             P_Term = Kp * Err_Value;
-            
-            
+            D_Term = Kd * (d_Temp - Err_Value);
+            d_Temp = Err_Value;
             i_Temp = i_Temp + Err_Value;
-            if (i_Temp > iMax){
+
+            if (i_Temp > iMax)
+            {
                 i_Temp = iMax;
-                }
-                else if (i_Temp < iMin){
-                    i_Temp = iMin;
-                }
+            }
+            else if (i_Temp < iMin)
+            {
+                i_Temp = iMin;
+            }
+
             I_Term = Ki * i_Temp;
-            PWM_Temp =  (int)(P_Term + I_Term);
-             if (PWM_Temp < 1){
+
+            PWM_Temp = (P_Term + I_Term);
+
+            if (PWM_Temp < 0)
+            {
                 PWM_Temp = 0;
             }
-            sprintf(send, "%i,%i,%i\n", PWM_Temp,(int)Err_Value,(int)i_Temp);
+
+            sprintf(send, "%i,%i,%i\n", (int)PWM_Temp, Err_Value, i_Temp);
             putsUART0(send);
-            OCR1B = PWM_Temp;
-
-
-
-
-
+            OCR1B = (int)PWM_Temp;
 
 
             flag_ADC = 0;
-           // PORTB ^= (1<<PB4);
+
+            // PORTB ^= (1<<PB4);
             // Find error
-            //u[0] = (ref - ADC_new)*0.139;
-            //OCR1B = (int)u[0];
-           /* // Calculate output
-            uvals = num[0] * u[0] + num[1] * u[1] + num[2] * u[2];
-            yvals = -den[1] * y[1] - den[2] * y[2];
-            y[0] = uvals + yvals;
-            
-            OCR1B = (int)y[0];
-            */
+            // u[0] = (ref - ADC_new)*0.139;
+            // OCR1B = (int)u[0];
+            /* // Calculate output
+             uvals = num[0] * u[0] + num[1] * u[1] + num[2] * u[2];
+             yvals = -den[1] * y[1] - den[2] * y[2];
+             y[0] = uvals + yvals;
+
+             OCR1B = (int)y[0];
+             */
             // dtostrf(y[0], 4, 2, send);
             // sprintf(send, "%d\n", ADC_new);
             // putsUART0(send);
 
             // Cycling outputs
-           /* y[2] = y[1];
-            y[1] = y[0];
+            /* y[2] = y[1];
+             y[1] = y[0];
 
-            // Cycling inputs
-            u[2] = u[1];
-            u[1] = u[0];*/
+             // Cycling inputs
+             u[2] = u[1];
+             u[1] = u[0];*/
 
-            //flag_ADC = 0;
+            // flag_ADC = 0;
 
             // if ((test_count > 999))
             // {
