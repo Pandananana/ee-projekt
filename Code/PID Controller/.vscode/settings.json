@@ -2,6 +2,7 @@
     "files.associations": {
         "adc.h": "c",
         "interrupt.h": "c",
-        "io.h": "c"
+        "io.h": "c",
+        "timer.h": "c"
     }
 }
