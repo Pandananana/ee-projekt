@@ -1,4 +1,4 @@
-#include "CONTROLER.h"
+#include "Controler.h"
 float e[3] = {0.0 , 0.0, 0.0};
 float u[3] = {0.0 , 0.0, 0.0};
 

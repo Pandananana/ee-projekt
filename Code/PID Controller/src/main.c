@@ -7,7 +7,7 @@
 #include "timer.h"
 #include "UART.h"
 #include "ADC.h"
-#include "CONTROLER.h"
+#include "Controler.h"
 #define BAUD 115200
 #define MYUBBRF F_CPU / 8 / BAUD - 1
 
@@ -48,8 +48,8 @@ int main(void)
         0
     };
     */
-    OCR1B = 100;
-    _delay_ms(1000);
+    OCR1B = 0;
+    _delay_ms(5000);
     DDRB |= (1 << PB4);
    
     
@@ -67,94 +67,118 @@ int main(void)
 
     while (1)
     {
-        step(20,90,6000);
-        if (flag_ADC == 1)
-        {
-            /*Err_Value = (ref - ADC_new);
+        OCR1B = 45;
+        PORTB &= (0<<PB4);
+        _delay_ms(5000);
+        OCR1B = 50;
+        PORTB |= (1<<PB4);
+        _delay_ms(5000);
+
+        OCR1B = 45;
+        PORTB &= (0<<PB4);
+        _delay_ms(3000);
+        OCR1B = 50;
+        PORTB |= (1<<PB4);
+        _delay_ms(3000);
+
+        OCR1B = 45;
+        PORTB &= (0<<PB4);
+        _delay_ms(1000);
+        OCR1B = 50;
+        PORTB |= (1<<PB4);
+        _delay_ms(1000);
+        
+
+
+
+
+        // if (flag_ADC == 1)
+        // {
+        //     /*Err_Value = (ref - ADC_new);
             
-            P_Term = Kp * Err_Value;
-            //test_count++;
+        //     P_Term = Kp * Err_Value;
+        //     //test_count++;
 
-            // if (test_count >= 60000)
-            // {
-            //     OCR1B = 0;
-            //     _delay_ms(5000);
-            //     Kp = Kp + 0.1;
-            //     test_count=0;
-            //     dtostrf(Kp, 4, 2, send);
-            //     putsUART0(send);
-            //     sprintf(send,",%d\n", OCR1B);
-            //     putsUART0(send);
-            // }
+        //     // if (test_count >= 60000)
+        //     // {
+        //     //     OCR1B = 0;
+        //     //     _delay_ms(5000);
+        //     //     Kp = Kp + 0.1;
+        //     //     test_count=0;
+        //     //     dtostrf(Kp, 4, 2, send);
+        //     //     putsUART0(send);
+        //     //     sprintf(send,",%d\n", OCR1B);
+        //     //     putsUART0(send);
+        //     // }
             
-            // OCR1B = round(P_Term);
+        //     // OCR1B = round(P_Term);
 
-            D_Term = Kd * (d_Temp - Err_Value);
-            d_Temp = Err_Value;
-            i_Temp = i_Temp + Err_Value;
+        //     D_Term = Kd * (d_Temp - Err_Value);
+        //     d_Temp = Err_Value;
+        //     i_Temp = i_Temp + Err_Value;
 
-            // if (abs(i_Temp) < 50)
-            // {
-            //     i_Temp = 0;
-            // }
+        //     // if (abs(i_Temp) < 50)
+        //     // {
+        //     //     i_Temp = 0;
+        //     // }
 
-            if (i_Temp > iMax)
-            {
-                i_Temp = iMax;
-            }
-            else if (i_Temp < iMin)
-            {
-                i_Temp = iMin;
-            }
+        //     if (i_Temp > iMax)
+        //     {
+        //         i_Temp = iMax;
+        //     }
+        //     else if (i_Temp < iMin)
+        //     {
+        //         i_Temp = iMin;
+        //     }
 
-            I_Term = Ki * i_Temp;
+        //     I_Term = Ki * i_Temp;
 
-            PWM_Temp = (P_Term + I_Term);
+        //     PWM_Temp = (P_Term + I_Term);
 
-            // sprintf(send, "%d,%d,%d\n", round(PWM_Temp), round(P_Term), round(I_Term));
-            // putsUART0(send);
-            OCR1B = round(PWM_Temp);
-            */
+        //     // sprintf(send, "%d,%d,%d\n", round(PWM_Temp), round(P_Term), round(I_Term));
+        //     // putsUART0(send);
+        //     OCR1B = round(PWM_Temp);
+        //     */
 
-            OCR1B = (int)control(ref,(float)ADC_new);
-            flag_ADC = 0;
+        //     OCR1B = (int)control(ref,(float)ADC_new);
+        //     flag_ADC = 0;
 
-            // PORTB ^= (1<<PB4);
-            // Find error
-            // u[0] = (ref - ADC_new)*0.139;
-            // OCR1B = (int)u[0];
-            /* // Calculate output
-             uvals = num[0] * u[0] + num[1] * u[1] + num[2] * u[2];
-             yvals = -den[1] * y[1] - den[2] * y[2];
-             y[0] = uvals + yvals;
+        //     // PORTB ^= (1<<PB4);
+        //     // Find error
+        //     // u[0] = (ref - ADC_new)*0.139;
+        //     // OCR1B = (int)u[0];
+        //     /* // Calculate output
+        //      uvals = num[0] * u[0] + num[1] * u[1] + num[2] * u[2];
+        //      yvals = -den[1] * y[1] - den[2] * y[2];
+        //      y[0] = uvals + yvals;
 
-             OCR1B = (int)y[0];
-             */
-            // dtostrf(y[0], 4, 2, send);
-            // sprintf(send, "%d\n", ADC_new);
-            // putsUART0(send);
+        //      OCR1B = (int)y[0];
+        //      */
+        //     // dtostrf(y[0], 4, 2, send);
+        //     // sprintf(send, "%d\n", ADC_new);
+        //     // putsUART0(send);
 
-            // Cycling outputs
-            /* y[2] = y[1];
-             y[1] = y[0];
+        //     // Cycling outputs
+        //     /* y[2] = y[1];
+        //      y[1] = y[0];
 
-             // Cycling inputs
-             u[2] = u[1];
-             u[1] = u[0];*/
+        //      // Cycling inputs
+        //      u[2] = u[1];
+        //      u[1] = u[0];*/
 
-            // flag_ADC = 0;
+        //     // flag_ADC = 0;
 
-            // if ((test_count > 999))
-            // {
-            //     sprintf(send, "\nDEBUG");
-            //     putsUART0(send);
-            //     for (uint16_t i = 0; i < 1000; i++)
-            //     {
-            //         sprintf(send, "%i\n", terminal[i]);
-            //         putsUART0(send);
-            //     }
-            //     test_count = 0;
-            // }
-        }
+        //     // if ((test_count > 999))
+        //     // {
+        //     //     sprintf(send, "\nDEBUG");
+        //     //     putsUART0(send);
+        //     //     for (uint16_t i = 0; i < 1000; i++)
+        //     //     {
+        //     //         sprintf(send, "%i\n", terminal[i]);
+        //     //         putsUART0(send);
+        //     //     }
+        //     //     test_count = 0;
+        //     // }
+        // }
     }
 }
