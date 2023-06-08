@@ -32,25 +32,25 @@ int main(void)
 
     char send[32];
 
-    OCR1B = 75;
+    OCR1B = 0;
     _delay_ms(2000);
     DDRB |= (1 << PB4);
 
     uint16_t test_count = 0;
 
-    float ref = 512;
+    float ref = 520;
 
     while (1)
     {
         if (flag_ADC == 1)
         {
-            // OCR1B = (int)control(ref,(float)ADC_new);
-            // flag_ADC = 0;
-            // test_count++;
+            OCR1B = round(control(ref,(float)ADC_new));
+            flag_ADC = 0;
 
+            // test_count++;
             // if (test_count >= 10000)
             // {
-            //     sprintf(send,"%d\n", (int)u[0]);
+            //     sprintf(send,"%d, %d, %d\n", (int)e[0], (int)e[1], (int)e[2]);
             //     putsUART0(send);
             //     test_count=0;
             // }
@@ -59,12 +59,12 @@ int main(void)
             // sprintf(send, "%d\n", ADC_new);
             // putsUART0(send);
 
-            OCR1B = 75;
-            PORTB &= (0 << PB4);
-            _delay_ms(20000);
-            OCR1B = 80;
-            PORTB |= (1 << PB4);
-            _delay_ms(20000);
+            // OCR1B = 75;
+            // PORTB &= (0 << PB4);
+            // _delay_ms(20000);
+            // OCR1B = 80;
+            // PORTB |= (1 << PB4);
+            // _delay_ms(20000);
 
             // OCR1B = 75;
             // PORTB &= (0 << PB4);
