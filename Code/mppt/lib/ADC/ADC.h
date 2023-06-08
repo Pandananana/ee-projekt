@@ -5,7 +5,15 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
+volatile uint16_t adcVoltage_new;
+volatile uint16_t adcVoltage_old;
+volatile uint16_t adcCurrent_new;
+volatile uint16_t adcCurrent_old;
+
 // Declare functions
+void CTC_Timer0_init();
 void ADC_init();
+ISR(TIMER0_COMPA_vect);
+ISR(ADC_vect);
 
 #endif

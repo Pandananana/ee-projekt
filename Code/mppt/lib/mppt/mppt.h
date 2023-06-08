@@ -3,6 +3,6 @@
 
 
 int calculatePower(uint16_t adcVoltage, uint16_t current);
-int calcPWM(uint16_t adcVoltage, int desired_voltage);
+int calcPWM(float adcVoltage, int desired_voltage);
 
 #endif /* INCFILE1_H_ */
