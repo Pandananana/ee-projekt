@@ -7,7 +7,7 @@
 #include "timer.h"
 #include "UART.h"
 #include "ADC.h"
-
+#include "Controler.h"
 #define BAUD 115200
 #define MYUBBRF F_CPU / 8 / BAUD - 1
 
@@ -48,7 +48,7 @@ int main(void)
         0
     };
     */
-    OCR1B = 0;
+    OCR1B = 1;
     _delay_ms(1000);
     DDRB |= (1 << PB4);
 
@@ -62,13 +62,14 @@ int main(void)
     float d_Temp = 0;
     int i_Temp = 0;
     int PWM_Temp = 10;
-    int ref = 520;
+    float ref = 600;
 
     while (1)
     {
+        step(20,90,6000);
         if (flag_ADC == 1)
         {
-            Err_Value = (ref - ADC_new);
+            /*Err_Value = (ref - ADC_new);
             
             P_Term = Kp * Err_Value;
             //test_count++;
@@ -112,8 +113,9 @@ int main(void)
             // sprintf(send, "%d,%d,%d\n", round(PWM_Temp), round(P_Term), round(I_Term));
             // putsUART0(send);
             OCR1B = round(PWM_Temp);
+            */
 
-
+            OCR1B = (int)control(ref,(float)ADC_new);
             flag_ADC = 0;
 
             // PORTB ^= (1<<PB4);
