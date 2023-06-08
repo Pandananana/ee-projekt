@@ -1,18 +1,8 @@
 #include "Controler.h"
+#include "Data.h"
+
 double e[3] = {0.0, 0.0, 0.0};
 double u[3] = {0.0, 0.0, 0.0};
-
-double num[3] = {
-    0.114201145269007,
-    -0.114078583000048,
-    0
-};
-
-double den[3] = {
-    1.0,
-    -1,
-    0
-    };
 
 double control(double ref, double mesurement)
 {
