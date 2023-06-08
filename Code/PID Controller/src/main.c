@@ -38,7 +38,7 @@ int main(void)
 
     uint16_t test_count = 0;
 
-    float ref = 520;
+    float ref = 520.0;
 
     while (1)
     {

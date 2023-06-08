@@ -1,20 +1,20 @@
 #include "Controler.h"
-float e[3] = {0.0, 0.0, 0.0};
-float u[3] = {0.0, 0.0, 0.0};
+double e[3] = {0.0, 0.0, 0.0};
+double u[3] = {0.0, 0.0, 0.0};
 
-float num[3] = {
-    0.076165731271768,
-    -0.152059913859139,
-    0.075894386290424
+double num[3] = {
+    0.114201145269007,
+    -0.114078583000048,
+    0
 };
 
-float den[3] = {
+double den[3] = {
     1.0,
-    -1.998337962774935,
-    0.998337962774935
+    -1,
+    0
     };
 
-float control(float ref, float mesurement)
+double control(double ref, double mesurement)
 {
     e[0] = ref - mesurement;
     u[0] = (-den[1]) * u[1] + (-den[2]) * u[2] + num[0] * e[0] + num[1] * e[1] + num[2] * e[2];
