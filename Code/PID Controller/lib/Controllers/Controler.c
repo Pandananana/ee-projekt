@@ -13,6 +13,15 @@ double control(double ref, double mesurement)
     u[2] = u[1];
     u[1] = u[0];
 
+    if (u[0] < 0.00)
+    {
+        u[0] = 0;
+    }
+    else if (u[0] >100.00)
+    {
+        u[0] = 100;
+    }
+
     return (u[0]);
 }
 
