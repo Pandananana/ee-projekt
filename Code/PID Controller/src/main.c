@@ -7,7 +7,7 @@
 #include "timer.h"
 #include "UART.h"
 #include "ADC.h"
-#include "Controler.h"
+#include "CONTROLER.h"
 #define BAUD 115200
 #define MYUBBRF F_CPU / 8 / BAUD - 1
 
@@ -48,10 +48,11 @@ int main(void)
         0
     };
     */
-    OCR1B = 1;
+    OCR1B = 100;
     _delay_ms(1000);
     DDRB |= (1 << PB4);
-
+   
+    
     float iMax = 200;
     float iMin = -200;
     int Err_Value;
