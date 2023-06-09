@@ -47,13 +47,13 @@ int main(void)
             OCR1B = round(control(ref,(float)ADC_new));
             flag_ADC = 0;
 
-            // test_count++;
-            // if (test_count >= 10000)
-            // {
-            //     sprintf(send,"%d, %d, %d\n", (int)e[0], (int)e[1], (int)e[2]);
-            //     putsUART0(send);
-            //     test_count=0;
-            // }
+            test_count++;
+            if (test_count >= 10000)
+            {
+                sprintf(send,"%d, %d\n", (int)e[0], (int)u[0]);
+                putsUART0(send);
+                test_count=0;
+            }
 
             // dtostrf(y[0], 4, 2, send);
             // sprintf(send, "%d\n", ADC_new);
