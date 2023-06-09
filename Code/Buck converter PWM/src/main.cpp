@@ -1,7 +1,7 @@
 #include <Arduino.h>
 
 const int pwmPin = 10; // PWM output pin
-const int trigger = 9;
+const int trigger = 8;
 
 void setup()
 {
@@ -31,14 +31,11 @@ void setup()
 
 void loop()
 {
+  OCR1B = 111;
+  digitalWrite(trigger, 0);
+  delay(5000);
 
-    /*analogWrite(pwmPin, 153);
-    digitalWrite(trigger, 0);
-    delay(10);  // Delay for a certain period (adjust as needed)
-
-    analogWrite(pwmPin, 178);
-    digitalWrite(trigger, 1);
-    delay(10);  // Delay for a certain period (adjust as needed)
-
-  */
+  OCR1B = 143;
+  digitalWrite(trigger, 1);
+  delay(10000);
 }
