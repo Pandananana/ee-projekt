@@ -1,38 +1,44 @@
 #include <Arduino.h>
 
-
-
-
-const int pwmPin = 10;  // PWM output pin
+const int pwmPin = 10; // PWM output pin
 const int trigger = 9;
 
+void setup()
+{
+    pinMode(pwmPin, OUTPUT); // Set the PWM pin as output
+    pinMode(trigger, OUTPUT);
 
-void setup() {
-  pinMode(pwmPin, OUTPUT);  // Set the PWM pin as output
-  pinMode(trigger, OUTPUT);
-  OCR1A = 320;
-  TCCR1B = (1<<WGM13)|(1<<WGM12)|(1<<CS10);
-  TCCR1A = (1<<WGM10)|(1<<WGM11)|(1<<COM1B1); 
+    // Clear Timer Control Registers
+    TCCR1A = 0;
+    TCCR1B = 0;
+
+    // Set non-inverting mode for both OCR1A and OCR1B
+    TCCR1A |= (1 << COM1A1) | (1 << COM1B1);
+
+    // Set fast PWM Mode 14
+    TCCR1A |= (1 << WGM11);
+    TCCR1B |= (1 << WGM12) | (1 << WGM13);
+
+    // Set prescaler to 1
+    TCCR1B |= (1 << CS10);
+
+    // Set top count value (determines the PWM frequency)
+    ICR1 = 319;
+
+    // Set the PWM duty cycle by writing to OCR1A or OCR1B (value must be less than ICR1)
+    OCR1B = 160;
 }
 
-void loop() {
+void loop()
+{
 
-OCR1B = 160;
+    /*analogWrite(pwmPin, 153);
+    digitalWrite(trigger, 0);
+    delay(10);  // Delay for a certain period (adjust as needed)
 
-  /*analogWrite(pwmPin, 153); 
-  digitalWrite(trigger, 0);
-  delay(10);  // Delay for a certain period (adjust as needed)
+    analogWrite(pwmPin, 178);
+    digitalWrite(trigger, 1);
+    delay(10);  // Delay for a certain period (adjust as needed)
 
-  analogWrite(pwmPin, 178);
-  digitalWrite(trigger, 1);
-  delay(10);  // Delay for a certain period (adjust as needed)
-
-*/
-
+  */
 }
-
-
-
-
-
-
