@@ -28,7 +28,7 @@ int main(void)
     init();
     sei();
 
-    float ref = 246.0;
+    float ref = 251.0;
 
     OCR1B = (PWM_TOP - 1);
 
