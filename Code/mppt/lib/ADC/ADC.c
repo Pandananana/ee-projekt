@@ -35,7 +35,7 @@ ISR(ADC_vect){ // Runs when a new ADC reading is ready
 		ADMUX |= (1<<MUX0); //ADC input fra pin A1 (strøm)
 	} 
 	else if(ADCflag==1) {
-		adcCurrent_old = adcCurrent_new;
+		adcCurrent_old = adcCurrent_new; 
 		adcCurrent_new = ADCH; 
 		ADCflag = 0;
 		ADMUX &=~(1<<MUX0); //ADC input fra pin A0 (spænding)
