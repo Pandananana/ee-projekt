@@ -10,14 +10,14 @@
 #include "Controler.h"
 #define BAUD 115200
 #define MYUBBRF F_CPU / 8 / BAUD - 1
-#define PWM_TOP 400
+#define PWM_TOP 319
 #define PWM_BOT 0
 
 void init()
 {
     init_fast_pwm();
     // 100 kHz at 16Mhz
-	OCR1A = PWM_TOP;
+    OCR1A = PWM_TOP;
 
     // ADC set up
     ADC_init();
@@ -28,31 +28,29 @@ int main(void)
     init();
     sei();
 
-    float ref = 243.0;
+    float ref = 246.0;
 
-    OCR1B = (PWM_TOP-1);
+    OCR1B = (PWM_TOP - 1);
 
     while (1)
     {
-        if (flag_ADC == 1)
+        _delay_ms(1);
+        if (ADC_new > ref)
         {
-            if (ADC_new > ref)
-            {
-                OCR1B++;
-            }
-            else if (ADC_new < ref)
-            {
-                OCR1B--;
-            }
+            OCR1B++;
+        }
+        else if (ADC_new < ref)
+        {
+            OCR1B--;
+        }
 
-            if (OCR1B > PWM_TOP)
-            {
-                OCR1B = (PWM_TOP-1);
-            }
-            else if (OCR1B < PWM_BOT)
-            {
-                OCR1B = PWM_BOT;
-            }
+        if (OCR1B > PWM_TOP)
+        {
+            OCR1B = (PWM_TOP - 1);
+        }
+        else if (OCR1B < PWM_BOT)
+        {
+            OCR1B = PWM_BOT;
         }
     }
 }
