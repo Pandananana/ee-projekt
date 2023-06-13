@@ -48,15 +48,14 @@ int main(void)
         {
             if (flag_ADC2 == 1){
                  OCR3B = round(control(ref_motor, (float)ADC_new));
-                
             }
             
            if (flag_ADC2 == 2){
                 PWM_buck = BUCK_control((int)ref_buck , PWM_TOP, ADC_new, PWM_buck);
                 OCR3C = PWM_buck;
-                PORTB ^= (1 <<PB4);
-                //sprintf(send, "%d\n",ADC_new);
-                //putsUART0(send);
+                //PORTB ^= (1 <<PB4);
+                sprintf(send, "%d\n",ADC_new);
+                putsUART0(send);
            }
            flag_ADC = 0;
 

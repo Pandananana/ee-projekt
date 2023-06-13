@@ -5,7 +5,7 @@ volatile uint8_t flag_ADC = 0,flag_ADC2 = 0 ;
 
 void CTC_Timer0_init(){
 	TIMSK0 |=(1<<OCIE0A);
-	OCR0A = 199;
+	OCR0A = 99;
 	TCCR0B|= (1<<CS01); // set to prescaler to 8
 	TCCR0A |= (1<<WGM01); // set to CTC mode
 }
