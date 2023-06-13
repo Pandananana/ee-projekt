@@ -28,29 +28,37 @@ int main(void)
     init();
     sei();
 
-    float ref = 251.0;
+    float ref = 247.0;
 
-    OCR1B = (PWM_TOP - 1);
+    int OCR1B_signed = (PWM_TOP-1);
+
+    OCR1B = OCR1B_signed;
 
     while (1)
     {
         _delay_ms(1);
         if (ADC_new > ref)
         {
-            OCR1B++;
+            OCR1B_signed++;
         }
         else if (ADC_new < ref)
         {
-            OCR1B--;
+            OCR1B_signed--;
         }
 
-        if (OCR1B > PWM_TOP)
+        if (OCR1B_signed > PWM_TOP)
         {
-            OCR1B = (PWM_TOP - 1);
+            OCR1B_signed = PWM_TOP;
         }
-        else if (OCR1B < PWM_BOT)
+        else if (OCR1B_signed < 0)
         {
-            OCR1B = PWM_BOT;
+            OCR1B_signed = 0;
+            DDRB &= (0<<PB6);
         }
+        else {
+            DDRB |= (1<<PB6);
+        }
+        OCR1B = OCR1B_signed;
+        // OCR1B = PWM_TOP;
     }
 }
