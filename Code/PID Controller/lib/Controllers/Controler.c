@@ -37,3 +37,27 @@ void step(uint8_t base, uint8_t top, uint16_t delay)
     _delay_ms(delay);
     PORTB &= (0 << PB4);
 }
+
+uint16_t BUCK_control(uint16_t ref ,uint16_t PWM_top, uint16_t ADC_mes, uint16_t PWM){
+    
+    if (ADC_mes > ref){
+            PWM++;
+        }
+            else if (ADC_mes < ref){
+                PWM--;
+            }
+
+        if (PWM > PWM_top){
+            PWM = PWM_top;
+        }
+            else if (PWM < 0){
+                PWM = 0;
+                DDRE &= (0<<PE5);
+            }
+            else{
+                DDRE |= (1<<PE5);
+            }
+    
+
+    return(PWM);
+}
