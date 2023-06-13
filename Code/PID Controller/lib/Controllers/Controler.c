@@ -13,7 +13,7 @@ double control(double ref, double mesurement)
     {
         u[0] = 0;
     }
-    else if (u[0] >100.00)
+    else if (u[0] > 100.00)
     {
         u[0] = 100;
     }
@@ -38,26 +38,31 @@ void step(uint8_t base, uint8_t top, uint16_t delay)
     PORTB &= (0 << PB4);
 }
 
-uint16_t BUCK_control(uint16_t ref ,uint16_t PWM_top, uint16_t ADC_mes, uint16_t PWM){
-    
-    if (ADC_mes > ref){
-            PWM++;
-        }
-            else if (ADC_mes < ref){
-                PWM--;
-            }
+uint16_t BUCK_control(uint16_t ref, uint16_t PWM_top, uint16_t ADC_mes, uint16_t PWM)
+{
 
-        if (PWM > PWM_top){
-            PWM = PWM_top;
-        }
-            else if (PWM < 0){
-                PWM = 0;
-                DDRE &= (0<<PE5);
-            }
-            else{
-                DDRE |= (1<<PE5);
-            }
-    
+    if (ADC_mes > ref)
+    {
+        PWM++;
+    }
+    else if (ADC_mes < ref)
+    {
+        PWM--;
+    }
 
-    return(PWM);
+    if (PWM >= PWM_top)
+    {
+        PWM = PWM_top-1;
+    }
+    else if (PWM < 0)
+    {
+        PWM = 0;
+        DDRE &= (0 << PE5);
+    }
+    else
+    {
+        DDRE |= (1 << PE5);
+    }
+
+    return (PWM);
 }

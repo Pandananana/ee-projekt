@@ -13,7 +13,7 @@
 
 void init()
 {
-    //init_fast_pwm();
+    // init_fast_pwm();
     init_T3_fast_pwm();
     // ADC set uo
     ADC_init();
@@ -34,33 +34,61 @@ int main(void)
     char send[32];
 
     OCR3B = 0;
-    PORTB = (1 <<PB4);
+    PORTB = (1 << PB4);
     _delay_ms(2000);
     DDRB |= (1 << PB4);
 
+    uint8_t OCR3C_mem[5] = {0};
+    uint8_t motor_stop = 0;
+
     uint16_t test_count = 0;
 
-    float ref_motor = 512.0,ref_buck = 247.0;
+    float ref_motor = 512.0, ref_buck = 247.0;
     uint16_t PWM_TOP = 100, PWM_buck;
     while (1)
     {
         if (flag_ADC == 1)
         {
-            if (flag_ADC2 == 1){
-                 OCR3B = round(control(ref_motor, (float)ADC_new));
+            if (flag_ADC2 == 1)
+            {
+                if (motor_stop)
+                {
+                    OCR3B = 0;
+                }
+                else
+                {
+                    OCR3B = round(control(ref_motor, (float)ADC_new));
+                }
             }
-            
-           if (flag_ADC2 == 2){
-                PWM_buck = BUCK_control((int)ref_buck , PWM_TOP, ADC_new, PWM_buck);
+
+            if (flag_ADC2 == 2)
+            {
+                PWM_buck = BUCK_control((int)ref_buck, PWM_TOP, ADC_new, PWM_buck);
                 OCR3C = PWM_buck;
-                //PORTB ^= (1 <<PB4);
-                sprintf(send, "%d\n",ADC_new);
-                putsUART0(send);
-           }
-           flag_ADC = 0;
+                OCR3C_mem[4] = OCR3C_mem[3];
+                OCR3C_mem[3] = OCR3C_mem[2];
+                OCR3C_mem[2] = OCR3C_mem[1];
+                OCR3C_mem[1] = OCR3C_mem[0];
+                OCR3C_mem[0] = OCR3C;
 
+                if (OCR3C_mem[0] >= 95 && OCR3C_mem[1] >= 95 && OCR3C_mem[2] >= 95 && OCR3C_mem[3] >= 95 && OCR3C_mem[4] >= 95)
+                {
+                    motor_stop = 1;
+                }
+                else
+                {
+                    motor_stop = 0;
+                }
 
-            
+                test_count++;
+                if (test_count >= 500)
+                {
+                    sprintf(send, "%d, %d, %d, %d, %d\n", OCR3C_mem[0], OCR3C_mem[1], OCR3C_mem[2], OCR3C_mem[3], OCR3C_mem[4]);
+                    putsUART0(send);
+                    test_count = 0;
+                }
+            }
+            flag_ADC = 0;
 
             // if ((int)u[0] > 55 && (int)u[0] < 65)
             //     {
@@ -75,14 +103,6 @@ int main(void)
             //                     }
             //             }
             //     }
-
-            /*test_count++;
-            if (test_count >= 10000)
-            {
-                sprintf(send, "%d, %d\n", (int)e[0], (int)u[0]);
-                putsUART0(send);
-                test_count = 0;
-            }*/
         }
     }
 }
