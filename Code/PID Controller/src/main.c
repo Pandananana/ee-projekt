@@ -79,30 +79,8 @@ int main(void)
                 {
                     motor_stop = 0;
                 }
-
-                test_count++;
-                if (test_count >= 500)
-                {
-                    sprintf(send, "%d, %d, %d, %d, %d\n", OCR3C_mem[0], OCR3C_mem[1], OCR3C_mem[2], OCR3C_mem[3], OCR3C_mem[4]);
-                    putsUART0(send);
-                    test_count = 0;
-                }
             }
             flag_ADC = 0;
-
-            // if ((int)u[0] > 55 && (int)u[0] < 65)
-            //     {
-            //         if ((int)u[1] > 55 && (int)u[1] < 65)
-            //             {
-            //                 if ((int)u[1] > 55 && (int)u[1] < 65)
-            //                     {
-            //                         OCR1B = 80;
-            //                         sprintf(send, "BOOST\n");
-            //                         putsUART0(send);
-            //                         _delay_ms(100);
-            //                     }
-            //             }
-            //     }
         }
     }
 }
