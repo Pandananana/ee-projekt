@@ -13,8 +13,8 @@
 
 void init()
 {
-    init_fast_pwm();
-
+    //init_fast_pwm();
+    init_T3_fast_pwm();
     // ADC set uo
     ADC_init();
 
@@ -33,21 +33,23 @@ int main(void)
 
     char send[32];
 
-    OCR1B = 0;
+    OCR3B = 0;
     _delay_ms(2000);
     DDRB |= (1 << PB4);
 
     uint16_t test_count = 0;
 
-    float ref = 520.0;
+    float ref = 512.0;
 
     while (1)
     {
         if (flag_ADC == 1)
         {
-            OCR1B = round(control(ref, (float)ADC_new));
+            
+            OCR3B = round(control(ref, (float)ADC_new));
             flag_ADC = 0;
             
+            OCR3C = 0;
 
             // if ((int)u[0] > 55 && (int)u[0] < 65)
             //     {
@@ -63,13 +65,13 @@ int main(void)
             //             }
             //     }
 
-            test_count++;
+            /*test_count++;
             if (test_count >= 10000)
             {
                 sprintf(send, "%d, %d\n", (int)e[0], (int)u[0]);
                 putsUART0(send);
                 test_count = 0;
-            }
+            }*/
         }
     }
 }
