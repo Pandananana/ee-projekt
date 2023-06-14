@@ -7,7 +7,7 @@
 
 // // Declare global varibel
 uint16_t ADC_new;
-volatile uint8_t flag_ADC, flag_ADC2;
+volatile uint8_t flag_ADC;
 
 // Declare functions
 void CTC_Timer0_init();

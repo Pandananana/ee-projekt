@@ -10,5 +10,5 @@ void initTimer1(uint16_t compareValue);
 void initTimer3(uint16_t compareValue);
 void init_pc_pwm();
 void init_fast_pwm();
-void init_T3_fast_pwm();
+
 #endif /* TIMER_H_ */
