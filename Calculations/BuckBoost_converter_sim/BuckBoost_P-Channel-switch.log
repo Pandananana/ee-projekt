@@ -1,0 +1,27 @@
+Circuit: * C:\Users\Simon\Documents\GitHub\ee-projekt\Calculations\BuckBoost_converter_sim\BuckBoost_P-Channel-switch.asc
+
+Warning: Multiple definitions of model "2scr375p" Type: BJT
+Warning: Multiple definitions of model "bc857b" Type: BJT
+Warning: Multiple definitions of model "bc847c" Type: BJT
+Warning: Multiple definitions of model "bc847b" Type: BJT
+Limiting rise time of source v2 to 3.6e-007
+Limiting fall time of source v2 to 3.6e-007
+Direct Newton iteration for .op point succeeded.
+
+Date: Wed Jun 14 09:41:14 2023
+Total elapsed time: 4.520 seconds.
+
+tnom = 27
+temp = 27
+method = modified trap
+totiter = 541229
+traniter = 541211
+tranpoints = 187123
+accept = 136663
+rejected = 50460
+matrix size = 24
+fillins = 6
+solver = Normal
+Matrix Compiler1: 1.56 KB object code size  0.7/0.5/[0.2]
+Matrix Compiler2: off  [0.4]/0.6/0.6
+
