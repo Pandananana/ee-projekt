@@ -7,6 +7,9 @@ volatile uint16_t adcVoltage_new = 0;
 volatile uint16_t adcVoltage_old = 0;
 volatile uint16_t adcCurrent_new = 0;
 volatile uint16_t adcCurrent_old = 0;
+volatile uint8_t flagADC = 0;
+volatile uint8_t counter = 0;
+volatile uint16_t adc_array[100][2];
 
 void CTC_Timer0_init(){
 	TIMSK0 |=(1<<OCIE0A);
@@ -30,14 +33,20 @@ ISR(TIMER0_COMPA_vect){
 ISR(ADC_vect){ // Runs when a new ADC reading is ready
     if(ADCflag==0) {
 		adcVoltage_old = adcVoltage_new;
-		adcVoltage_new = ADCH; //Read ADC input
+		adc_array[counter][0] = ADCH; //Read ADC input
 		ADCflag = 1;
 		ADMUX |= (1<<MUX0); //ADC input fra pin A1 (strøm)
 	} 
 	else if(ADCflag==1) {
 		adcCurrent_old = adcCurrent_new; 
-		adcCurrent_new = ADCH; 
+		adc_array[counter][1] = ADCH;
 		ADCflag = 0;
 		ADMUX &=~(1<<MUX0); //ADC input fra pin A0 (spænding)
+		counter++;
+	}
+	if (counter == 99)
+	{
+		flagADC = 1;
+		counter = 0;
 	}
 }

@@ -1,11 +1,3 @@
-/*
- * USART.h
- *
- * Course number 62734
- *  Author: Anders s215453 and Oguzhan s215463
- */ 
-
-
 #ifndef UART_H_
 #define UART_H_
 

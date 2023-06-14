@@ -1,11 +1,4 @@
-/*
- * USART.c
- *
- * Course number 62734
- *  Author: Anders s215453 and Oguzhan s215463
- */ 
-
-#include "UART.h"
+ #include "UART.h"
 #include <avr/io.h>
 #include <avr/interrupt.h> 
 
