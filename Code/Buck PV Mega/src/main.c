@@ -30,9 +30,6 @@ int main(void)
 
     uart0_Init(MYUBBRF);
     char send[32];
-    // dtostrf(y[0], 4, 2, send);
-    //  sprintf(send,"init");
-    //  putsUART0(send);
 
     int ref = 256;
 
@@ -59,14 +56,7 @@ int main(void)
         else if (OCR1B_signed < 0)
         {
             OCR1B_signed = 0;
-            // DDRB &= (0<<PB6);
         }
-        // else {
-        //     DDRB |= (1<<PB6);
-        // }
         OCR1B = OCR1B_signed;
-        // OCR1B = 20;
-        sprintf(send, "%d, %d, %d\n", ADC_new,ref,OCR1B);
-        putsUART0(send);
     }
 }
