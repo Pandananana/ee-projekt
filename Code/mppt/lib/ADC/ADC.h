@@ -11,7 +11,7 @@ volatile uint16_t adcCurrent_new;
 volatile uint16_t adcCurrent_old;
 volatile uint8_t flagADC;
 volatile uint8_t counter;
-volatile uint16_t adc_array[100][2];
+uint16_t adc_array[100][2];
 
 
 // Declare functions
