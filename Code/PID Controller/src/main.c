@@ -43,7 +43,7 @@ int main(void)
 
     uint16_t test_count = 0;
 
-    float ref_motor = 512.0, ref_buck = 247.0;
+    float ref_motor = 520.0, ref_buck = 257.0;
     uint16_t PWM_TOP = 100, PWM_buck;
     while (1)
     {
