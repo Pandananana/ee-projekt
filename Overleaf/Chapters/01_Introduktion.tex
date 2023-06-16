@@ -1,12 +1,74 @@
 \documentclass[../main.tex]{subfiles}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{array}
+
 \begin{document}
 
 \chapter{Introduktion}
-Projektet i kurset \emph{Elektromagnetiske sensorer of digital signalbehandling}, går ud på at udvikle og fremstille en fungerende metaldetektor udfra en mikroprocessor og diskrete komponenter.
+Projektet i kurset \emph{62768 - Elektriske Energisystemer Projekt}, består grundlæggende af at kunne lave et stabilt og effektivt forsyningssystem, der kan levere den krævede spænding hele tiden, og skifte mellem to forskellige forsyningskilder (solceller og motor).  Projektet indebærer en basal forståelse for elektriske energisystemer, der omfatter alt fra produktion, fordeling og styring af elektrisk energi. 
+
+Projektet er meget relevant i lyset af den nuværende klimakrise og de stigende energipriser, og vil fortsat være i fremtiden. Det er vigtigt at kunne levere energi på en stabil måde, fra mange forskellige energikilder spredt ud over hele verden, og med høj effektivitet. Derudover, med fremkomsten af elektriske køretøjer, smarte hjem og andre teknologier, der afhænger af elektrisk energi, er det afgørende at have en dybtgående forståelse af elektriske systemer og deres styring.
+
+Denne rapport beskriver vores analyse, design, implementation og test af projektet.
 
 \section{Problemformulering}
-Metaldetektoren skal anvendes til at finde forskellige metaller og diskriminere mellem dem i en vis minimumsdybde.\\
-Derudover er der udleveret en kravspecifikation (se tabel \ref{tab:kravspecifikation}), med obligatoriske og optionelle krav, der skal overholdes.
+Der skal laves et system, som kan regulere den rette spænding fra solceller, og når der ikke kan leveres nok energi igennem solcellerne, skal en generator overtage spændingsforsyningen, således der ikke kommer uregelmæssigheder i de tilsluttede apparater. 
 
+Der skal derfor også overvejes hvordan systemet skal bygges op og hvordan, vi vil bruge de lærte teknikker og metoder fra tidligere kurser, til at sørge for at det bliver et stabilt og brugbart system. Der skal også vurderes yderligere ting som kan være relavant for projektet, såsom hvordan energien skal lagres, og hvordan der fås mest mulig brugbar energi fra solcellerne. Kravspecifikationerne for projektet er vedlagt under reference punktet.
+
+\section{Kravspecifikation}
+Projektet har følgende krav som er rangeret efter nødvendighed.
+
+\renewcommand{\arraystretch}{1.3}
+ % \resizebox{\textwidth}{!}{%
+    \begin{tabular}{|l|l|p{0.4\textwidth}|l|}
+ \hline
+ \rowcolors{HTML}{c0c0c0c0}\textbf{Nr.} & \textbf{Navn} & \textbf{Beskrivelse} &\textbf{Prioritet}\\
+ \hline
+  1  & AC-generator spænding (V1) & Den ensrettede spænding på lade-
+kondensatoren (V1) skal være 15
+volt +/- 1 volt. For en buck-strøm på
+100 mA & 1 \\
+ \hline
+ 2  & item  & item & item \\
+ \hline
+ 3  & item  & item & item \\
+ \hline
+ 4  & item  & item & item \\
+ \hline
+ 5  & item  & item & item \\
+ \hline
+ 6  & item  & item & item \\
+ \hline
+ 7  & item  & item & item \\
+ \hline
+ 8  & item  & item & item \\
+ \hline
+ 9  & item  & item & item \\
+ \hline
+ 10  & item  & item & item \\
+ \hline
+ 11  & item  & item & item \\
+ \hline
+ 12  & item  & item & item \\
+ \hline
+ 12  & item  & item & item \\
+ \hline
+ 13  & item  & item & item \\
+ \hline
+ 14  & item  & item & item \\
+ \hline
+ 15  & item  & item & item \\
+ \hline
+ 16  & item  & item & item \\
+ \hline
+ 17  & item  & item & item \\
+ \hline
+ 18  & item  & item & item \\
+ \hline
+ 19  & item  & item & item \\
+\hline
+    \end{tabular}}
 
 \end{document}

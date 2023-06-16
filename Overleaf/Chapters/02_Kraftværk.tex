@@ -1,9 +1,24 @@
 \documentclass[../main.tex]{subfiles}
 \begin{document}
 
-\chapter{Analyse} \label{Chap:Analyse}
+\chapter{Kraftværk} \label{Chap:Kraftværk}
 
-\section{Projektets overordnede omfang}
+\section{Generator }
+\subsection{Buck Converter}
+
+
+\section{}
+
+
+Lars er grim sygt
+
+
+
+
+
+
+
+
 
     \begin{figure}[H]
       \includegraphics[width=\textwidth]{Overleaf/Pictures/Diagrammer/Overordnet projektdiagram 1.png}
@@ -27,4 +42,16 @@ Da fasedrejningen af det målte RX-signal ønskes at anvendes til at bestemme de
 \subsubsection{Databehandling og display}
 Den målte data ønskes behandlet med en variation af DFT (diskret-tids fourier transformation) for at finde signalets amplitude og fasedrejning. Ud fra dette ønskes at kunne fremvise disse værdier, samt eventuelle konklusioner baseret på data, som f.eks. det målte metals type/egenskaber.
 
+\section{Styring af kraftværk}
+Kraftværket skal styres så der altid leveres 15V til indgangen på Buck Converteren. Da belastningerne kan ændre sig, er det ikke nok blot at sætte en proportional gain på. Der er nødt til at designes et system med feedback, så den aktuelle spænding kan sammenlignes med den ønskede. Dette realiseres med en PI-Lead kontroller, der udarbejdes efter de metoder vi lærte i kurset \emph{34722 - Reguleringsteknik 1}.
+
+Første skridt var at modellere systemets egenskaber i Matlab. Dette blev gjort ved at lave små steps på inputtet (PWM Duty Cycle) og måle på hvordan outputtet reagerer. Derefter kan Matlab fitte en overføringsfunktion.
+
+\begin{figure}[H]
+      \includegraphics[width=\textwidth]{Dokum}
+     \caption{Principdiagram / blokdiagram}
+     \label{fig: Principdiagram/blokdiagram}
+     \end{figure}
+
+     
 \end{document}
