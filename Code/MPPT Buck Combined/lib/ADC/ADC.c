@@ -38,13 +38,16 @@ ISR(ADC_vect){ // Runs when a new ADC reading is ready
     static uint8_t count_buck = 0;
 
         
-    if (count_buck > 7){
+    /*if (count_buck > 7){
         ADC_new = ADC;
         count_buck = 0;
         ADMUX &=~(1<<MUX1);
-        
+        ADMUX &=~(1<<MUX0);
+		ADCflag = 0;
+		BUCK_ADC_FLAG = 1;
     }
-    else if(ADCflag==0) {
+	*/
+    if(ADCflag==0) { 
 		char send[64];
 		adcVoltage_old = adcVoltage_new;
 		adc_array[counter][0] = ADC; //Read ADC input
@@ -59,11 +62,12 @@ ISR(ADC_vect){ // Runs when a new ADC reading is ready
 		counter++;
 	}
 
-    if (count_buck == 7)
+    /*if (count_buck == 7)
     {
-        ADMUX |= (1 < MUX1);
+        ADMUX |= (1<< MUX1);
         ADMUX &=~(1<<MUX0);
-    }
+
+    }*/
     
 
 	if (counter == 99)
@@ -71,5 +75,5 @@ ISR(ADC_vect){ // Runs when a new ADC reading is ready
 		flagADC = 1;
 		counter = 0;
 	}
-    count_buck++;
+    //count_buck++;
 }

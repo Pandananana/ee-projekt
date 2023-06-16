@@ -19,7 +19,7 @@ uint16_t current_old_avg;
 double voltage_avg = 0;
 float voltage_avg_new;
 float voltage_avg_old;
-uint32_t current_avg = 0;
+float current_avg = 0;
 float current_avg_new;
 float current_avg_old;
 uint16_t voltage_new;
@@ -30,13 +30,18 @@ uint16_t desired_voltage = 5;
 uint16_t OCR1B_old = 0;
 uint8_t direction = 1;
 uint8_t flag = 0;
-uint32_t power_avg_old;
+float power_avg_old;
 uint32_t power_avg = 0;
-int delta_power;
+float delta_power;
 uint16_t adc_voltage_old;
 uint16_t adc_voltage_new;
 float delta_voltage;
 int counter2 = 0;
+
+float voltage;
+float current;
+float power;
+
 //buck
 #define PWM_TOP 160
 #define PWM_BOT 0
@@ -47,7 +52,7 @@ void init()
 	init_fast_pwm();
 	uart0_Init(MYUBBRF); // Uart setup
     init_T3_fast_pwm();
-    OCR3A = PWM_TOP;
+    //OCR3A = PWM_TOP;
 	sei();
 	
 }
@@ -65,8 +70,7 @@ int main(void)
     //
 	while (1)
 	{
-
-        if (BUCK_ADC_FLAG == 1)
+       /* if (BUCK_ADC_FLAG == 1)
         {
             if (ADC_new > ref)
             {
@@ -87,7 +91,10 @@ int main(void)
             }
             OCR3B = OCR3B_signed;
             BUCK_ADC_FLAG = 0;
-        }
+			//sprintf(send,"%d, %d\n",OCR3B, ADC_new);
+			//putsUART0(send);
+
+        }*/
         
 		while(flag==0){ // Calculate inital duty cycle
 		OCR1B = calcPWM(adc_array[0][0], desired_voltage);
@@ -99,8 +106,9 @@ int main(void)
 
 		if (flagADC == 1)
 		{
-			power_avg_old = power_avg;
-			power_avg = 0;
+			power_avg_old = 0;
+			power_avg_old = power;
+			power = 0;
 			voltage_avg = 0;
 			current_avg = 0;
 			for (int i = 0; i < 100; i++)
@@ -110,64 +118,72 @@ int main(void)
 			}
 
 
-			voltage_avg_old = voltage_avg_new;
+			voltage_avg_old = voltage;
 			voltage_avg_new = voltage_avg/100.0;
-			current_avg_old = current_avg_new;
+			current_avg_old = current;
 			current_avg_new = current_avg/100.0;
 
-			power_avg = (uint32_t)(voltage_avg_new * current_avg_new);
-			
-			delta_power = power_avg - power_avg_old;
-			delta_voltage = voltage_avg_new - voltage_avg_old;
+			voltage = ((voltage_avg_new/1024.0)*5)*4.424;
+			current = ((current_avg_new/1024.0)*5)/7.5;
 
-			counter2++;
+			power = (voltage * current);
+			
+			delta_power = power - power_avg_old;
+			delta_voltage = voltage - voltage_avg_old;
+
+			/*counter2++;
 			if(counter2==10)
 			{
-			//dtostrf(voltage_avg_new, 10, 2, send);
-			//dtostrf(delta_voltage, 8, 2, send);
-			sprintf(send, "Power_delta: %d power_avg: %d\n", delta_power, power_avg);
+			dtostrf(voltage, 10, 2, send);
+			//dtostrf(current_avg_new, 8, 2, send);
+			//sprintf(send, "current: %s current_adc: %s\n", current, current_avg_new);
 			putsUART0(send);
 			counter2 = 0;
-			}
+			}*/
 
-		sprintf(send, "PWM: %d p_avg: %ld voltage: %d current: %d\n", 
-			OCR1B, power_avg, (uint16_t)voltage_avg_new, (uint16_t)current_avg_new);
-			putsUART0(send);
+			/*float current2 = current*100;
+			float voltage2 = voltage*100;
+			float power2 = power*100;*/
+
+			//sprintf(send, "PWM: %d p_avg: %ld voltage: %ld current: %ld\n", OCR1B, (uint32_t)power2, (uint32_t)voltage2, (uint32_t)current2);
+			//putsUART0(send);
 
 			if (delta_power > 0)
 			{
 				if (delta_voltage > 0) // Left side approaching MPP
 				{
-					OCR1B++;
+					OCR1B-=5;
 				}
 				else if (delta_voltage < 0) // Right side approaching MPP
 				{
-					OCR1B--;
+					OCR1B+=5;
 				}
 			}
 			else if (delta_power < 0)
 			{
 				if (delta_voltage > 0) // Right side moving away from MPP
 				{
-					OCR1B--;
+					OCR1B+=5;
 				}
 				else if (delta_voltage < 0) // Left side moving away from MPP
 				{
-					OCR1B++;
+					OCR1B-=5;
 				}
 			}
 			else if (delta_power == 0)
 			{
-				OCR1B = OCR1B;
+				OCR1B+=5;
 			}
 
-			if (OCR1B >= 255)
+
+
+			if (OCR1B >= 250)
 			{
-				OCR1B = 255;
+				OCR1B = 250;
 			}
-			else if (OCR1B <= 15)
+			else if (OCR1B <= 10)
 			{
-				OCR1B = 15;
+				OCR1B = 10;
 			}
 
 			flagADC = 0;
