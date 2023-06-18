@@ -45,7 +45,7 @@ Den målte data ønskes behandlet med en variation af DFT (diskret-tids fourier 
 \section{Styring af kraftværk}
 Kraftværket skal styres så der altid leveres 15V til indgangen på Buck Converteren. Da belastningerne kan ændre sig, er det ikke nok blot at sætte en proportional gain på. Der er nødt til at designes et system med feedback, så den aktuelle spænding kan sammenlignes med den ønskede. Dette realiseres med en PI-Lead kontroller, der udarbejdes efter de metoder vi lærte i kurset \emph{34722 - Reguleringsteknik 1}.
 
-Første skridt var at modellere systemets egenskaber i Matlab. Dette blev gjort ved at lave små steps på inputtet (PWM Duty Cycle) og måle hvordan outputtet reagerer. Derefter kan Matlab fitte en overføringsfunktion. Dette kan ses i nedenstående graf, hvor den grå linje er det reelle output (ADC værdier) og G er den fittet overføringsfunktion.
+Første skridt var at modellere systemets egenskaber i Matlab. Dette blev gjort ved at lave små steps på inputtet (OCRnB værdier) og måle hvordan outputtet reagerer (ADC værdier). Vi omregnede ikke til spændinger og duty cycle, da vi dermed kunne lave færre beregninger på mikrokontrolleren. Outputtet blev målt med et oscilloskop og gemt til en CSV fil som blev importeret til Matlab. Derefter kan Matlab fitte en overføringsfunktion. Dette kan ses i nedenstående graf, hvor den grå linje er det reelle output (ADC værdier) og G er den fittet overføringsfunktion. 
 
 \begin{figure}[H]
       \includegraphics[width=\textwidth]{Dokumentation/Motor Model Fit.jpg}
@@ -53,9 +53,15 @@ Første skridt var at modellere systemets egenskaber i Matlab. Dette blev gjort 
      \label{fig: System Overføringsfunktion}
      \end{figure}
 
-Derefter kan PID kontrolleren nu designes. Vi vælger en phase margin på 60 grader, da det giver en god balance mellem hastighed og stabilitet. Vi tilpasser Ni og alpha værdierne indtil vi finder et system der hurtigt, men ikke så hurtigt at motoren ikke kan følge med. Nedenstående figur viser en step respons af systemet med PID kontroller. Der er en smule overshoot, men det gav ikke nogle stabilitetsproblemer.
+Derefter kan PI-Lead kontrolleren nu designes. Vi vælger en phase margin på 60 grader, da det giver en god balance mellem hastighed og stabilitet. Vi tilpasser Ni og alpha værdierne indtil vi finder et system der hurtigt, men ikke så hurtigt at motoren ikke kan følge med. Nedenstående figur viser en step respons af systemet med PI-Lead kontroller. Der er en smule overshoot, men det gav ikke nogle stabilitetsproblemer.
 
-Nu skal denne PID kontroller, som er en overføringsfunktion i S-domænet, omdannes så den kan blive implementeret i kode. Dette gøres ved at Z transformere den med en indbygget Matlab funktion, hvor vi bruger ADC samplingsraten som input. Transformationens parametre skrives til en Data.h fil, som resten af C-koden benytter. Dette gør at vi kan iterere hurtigt og præcist. Z transformationens parametre kan nemt implementeres ved at gemme forrige inputs og outputs, og gange dem med et specifikt gain. I vores tilfælde gemmes der 2 forrige outputs og 1 forrigt input. Derefter ganges hvert input/output med deres tilhørende parameterværdi og alle værdierne lægges sammen. Dette outputtes som 
+\begin{figure}[H]
+      \includegraphics[width=\textwidth]{Dokumentation/Motor Model Fit.jpg}
+     \caption{System Overføringsfunktion}
+     \label{fig: System Overføringsfunktion}
+     \end{figure}
+
+Nu skal denne PID kontroller, som er en overføringsfunktion i S-domænet, omdannes så den kan blive implementeret i kode. Dette gøres ved at Z transformere den med en indbygget Matlab funktion, hvor vi bruger ADC samplingsraten som input. Transformationens parametre skrives til en Data.h fil, som resten af C-koden benytter. Dette gør at vi kan iterere hurtigt og præcist. Z transformationens parametre kan nemt implementeres ved at gemme forrige inputs og outputs, og gange dem med et specifikt gain. I vores tilfælde gemmes der 2 forrige outputs og 1 forrigt input. Derefter ganges hvert input/output med deres tilhørende parameterværdi og alle værdierne lægges sammen. Dette outputtes som OCRnB værdi, der benyttes af PWM timeren.
 
      
 \end{document}
