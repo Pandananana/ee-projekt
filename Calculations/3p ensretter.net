@@ -1,0 +1,20 @@
+* C:\Users\PC-xx\Documents\GitHub\ee-projekt\Calculations\3p ensretter.asc
+D2 N001 N002 DI_1N4006
+D3 N003 N002 DI_1N4006
+D6 N005 N002 DI_1N4006
+C1 N002 0 15m
+R1 N002 0 50
+R2 N002 N004 100k
+R3 N004 0 20k
+C2 N004 0 5µ
+V1 N001 0 SINE(0 15.745 100 0 0 0)
+V2 N003 0 SINE(0 15.745 100 0 0 120)
+V3 N005 0 SINE(0 15.745 100 0 0 240)
+D1 0 N001 DI_1N4006
+D4 0 N003 DI_1N4006
+D5 0 N005 DI_1N4006
+.model D D
+.lib C:\Users\PC-xx\Documents\LTspiceXVII\lib\cmp\standard.dio
+.tran 1s
+.backanno
+.end
