@@ -4,10 +4,11 @@
 \chapter{Kraftværk} \label{Chap:Kraftværk}
 
 \section{Generator}
-generatorn består af 2 motore  
+generatorn består af 2 motor en der skal forstille en turbine der så skal drive den anden motor som bruges som en generator.
 \subsection{Transformer}
 \section{Fuld ensretter bro}
 \section{Buck Converter}
+For at sikre den rigitge spænding til Energilageret, skal der implementeres en step-down/buck converter, der kan holde en output spænding på 4.8 volt med en input spænding på ca 15 volt fra generatoren. Da input spænding kan variere med op til 1 volt + og minus, er det vigtigt der indgår et feedback system så output spændingen holder den ønskede værdi og Energilagret ikke bliver overopladt
 \subsection{Kontrollering}
 For at styre Duty Cycle af PWM signalet, så converteren altid holdte 4.8V, brugte vi en Mega 2560 og samplede outputtet (som var blevet neddelt med en spændingsdeler). Derefter blev der bygget et while loop der hvert millisekund op- eller nedjusterede duty cyclen, afhængig af om ADC værdien var over eller under den ønsket værdi. Controlleren var hurtig og gjorde at Buck Converteren altid leverede 4.8V. 
 
