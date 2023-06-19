@@ -16,13 +16,12 @@ Denne rapport beskriver vores analyse, design, implementation og test af projekt
 Der skal laves et system, som kan regulere den rette spænding fra solceller, og når der ikke kan leveres nok energi igennem solcellerne, skal en generator overtage spændingsforsyningen, således der ikke kommer uregelmæssigheder i de tilsluttede apparater. 
 
 Der skal derfor også overvejes hvordan systemet skal bygges op og hvordan, vi vil bruge de lærte teknikker og metoder fra tidligere kurser, til at sørge for at det bliver et stabilt og brugbart system. Der skal også vurderes yderligere ting som kan være relavant for projektet, såsom hvordan energien skal lagres, og hvordan der fås mest mulig brugbar energi fra solcellerne. Kravspecifikationerne for projektet er vedlagt under reference punktet.
-
-\section{Kravspecifikation}
-Projektet har følgende krav som er rangeret efter nødvendighed.
-
-\renewcommand{\arraystretch}{1.3}
+\newpage
+\section{Kravspecifikation}\label{Sec:Kravspecifikation}
+Projektet har følgende krav.
+\renewcommand{\arraystretch}{1.2}
  % \resizebox{\textwidth}{!}{%
-    \begin{tabular}{|l|l|p{0.4\textwidth}|l|}
+    \begin{longtable}{|l|p{0.34\textwidth}|p{0.4\textwidth}|l|}
  \hline
  \rowcolors{HTML}{c0c0c0c0}\textbf{Nr.} & \textbf{Navn} & \textbf{Beskrivelse} &\textbf{Prioritet}\\
  \hline
@@ -31,44 +30,70 @@ kondensatoren (V1) skal være 15
 volt +/- 1 volt. For en buck-strøm på
 100 mA & 1 \\
  \hline
- 2  & item  & item & item \\
+ 2  & AC-generator strøm  & AC-generator systemet skal kunne
+levere 300 mA til buck konverteren. & 1 \\
  \hline
- 3  & item  & item & item \\
+ 3  & AC-generator spænding (V1) under
+belastning  & Ved en belastningsændring fra 100
+mA til 300 mA skal spændingen (V1)
+overholde krav 1, indenfor 1.0 s. & 1 \\
  \hline
- 4  & item  & item & item \\
+ 4  & Belastningsspændingen (V2)   & Spændingen V2 skal være indenfor
++/- 1.0 volt & 1 \\
  \hline
- 5  & item  & item & item \\
+ 5  & Belastningsstrøm (V2)   & Spændingskilde V2 skal kunne levere
+levere min. 150 mA. & 1 \\
  \hline
- 6  & item  & item & item \\
+ 6  & Belastningsspændingen (V2) under
+belastning  & Spændingen V2 skal være indenfor
++/- 1.0 volt ved en
+belastningsændring fra 50 mA til 150
+mA indenfor 1.0 s. & 1 \\
  \hline
- 7  & item  & item & item \\
+ 7  & Energi-lager strøm (V3)  & Spændingen V3 skal være indenfor 5
+v +/- 0.5 volt ved strømme større
+end 20 mA . & 1 \\
  \hline
- 8  & item  & item & item \\
+ 8  & Spændingskonvertering   & Alle spændingskonverteringer skal
+udføres med egen konstrueret
+buck/boost konverters. & 1 \\
  \hline
- 9  & item  & item & item \\
+ 9  & Spændingskonvertering   & Buck/boost konverters og MPPT-
+systemet skal implementeres med
+diskrete komponenter. & 1 \\
  \hline
- 10  & item  & item & item \\
+ 10  & Strømmåling   & Strømmåling kredsløb skal
+implementeres med diskrete
+komponenter – ingen integrere
+kredsløb tilladt (med undtagelse af
+op-amps). & 1 \\
  \hline
- 11  & item  & item & item \\
+ 11  & Energikilde prioritering  & Under belastning skal energien fra
+solcelle-panelet forbruges først. AC-
+generatoren fungerer således som
+supplerende energikilde. & 1 \\
  \hline
- 12  & item  & item & item \\
+ 12  & Boost og Buck konverter   & Skal realiseres som en del af
+projektet. & 1 \\
  \hline
- 12  & item  & item & item \\
+ 13  & Systemovervågning  & Et PC-baseret
+spændingsovervågningssystem
+udvikles. & 2 \\
  \hline
- 13  & item  & item & item \\
+ 14  & Systemovervågning   & Spændingsovervågningssystemet
+opdateres hver 1.0 s. & 2 \\
  \hline
- 14  & item  & item & item \\
+ 15  & Muligt software design   & Brug Arduinoens ADC, med timer
+interrupts og PWM & 2 \\
  \hline
- 15  & item  & item & item \\
+ 16  & Systemtest   & Systemet testes med 100w led light
+(0.5 meter) fra solpanelet & 1 \\
  \hline
- 16  & item  & item & item \\
+ 17  & Lineær regulator   & Må udskiftes med en buck regulator & 2 \\
  \hline
- 17  & item  & item & item \\
+ 18  & Data behandlingsplatform   & Arduino & 2 \\
  \hline
- 18  & item  & item & item \\
- \hline
- 19  & item  & item & item \\
+ 19  & Komponenttyper generelt  & Generelt skal alle kredsløb implementeres med diskrete komponenter – ingen integrere kredsløb tilladt (med undtagelse af op-amps). Ligeledes må der ikke anvendes færdige sensorer, ud over modstande koblet som en sensor. & 1 \\
 \hline
-    \end{tabular}
-
+\end{longtable}
 \end{document}
