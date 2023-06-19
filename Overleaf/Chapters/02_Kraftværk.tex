@@ -48,19 +48,28 @@ Følgende kravspecifikationer tilhører denne del af projektet
   \item Ved en belastningsændring fra 100mA til 300 mA skal V1 overholde krav 1, indenfor 1.0 s.
 \end{enumerate}
 
-For at teste Krav 1, belaster vi udgangen af buck converteren (4.8V) med 16$\Omega$ hvilket svarer til nogenlunde 100mA ved 15V. Det kan ses på Figur \ref{fig: Krav 1 Opfyldt} at spændingen er 14.9V, og kravet dermed er overholdt.
+For at teste Krav 1, belaster vi udgangen af buck konverteren (4.8V) med 16$\Omega$ hvilket svarer til nogenlunde 100mA ved 15V. Det kan ses på Figur \ref{fig: Krav 1 Opfyldt} at spændingen er 14.9V, og kravet dermed er overholdt.
 \begin{figure}[H]
       \includegraphics[width=\textwidth]{Dokumentation/Pictures/Krav1.jpg}
      \caption{Krav 1 Opfyldt}
      \label{fig: Krav 1 Opfyldt}
      \end{figure}
 
-For at teste Krav 1, belaster vi udgangen af buck converteren (4.8V) med 5$\Omega$ hvilket svarer til nogenlunde 300mA ved 15V. Det kan ses på Figur \ref{fig: Krav 1 Opfyldt} at spændingen er 14.9V, og kravet dermed er overholdt.
+For at teste Krav 2, belaster vi udgangen af buck konverteren (4.8V) med 5$\Omega$ hvilket svarer til nogenlunde 300mA ved 15V. Det kan ses på Figur \ref{fig: Krav 2 Opfyldt} at spændingen er 14.9V, og kravet dermed er overholdt.
 \begin{figure}[H]
       \includegraphics[width=\textwidth]{Dokumentation/Pictures/Krav2.jpg}
      \caption{Krav 2 Opfyldt}
      \label{fig: Krav 2 Opfyldt}
      \end{figure}
+
+For at teste Krav 3, belaster vi udgangen af buck konverteren (4.8V) med 5$\Omega$ og skifter den derefter hurtigt til 164$\Omega$ hvilket svarer til nogenlunde at hoppe fra 100mA til 300mA ved 15V. Det kan ses på Figur \ref{fig: Krav 3 Opfyldt} at spændingen er -1V efter 1 sekund, og kravet dermed er overholdt.
+\begin{figure}[H]
+      \includegraphics[width=\textwidth]{Dokumentation/Pictures/Krav3.jpg}
+     \caption{Krav 3 Opfyldt}
+     \label{fig: Krav 3 Opfyldt}
+     \end{figure}
+
+De tre krav er allesammen overholdt, og testen er dermed en succes. 
 
      
 \end{document}
