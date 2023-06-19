@@ -1,0 +1,42 @@
+* C:\Users\simo2\OneDrive - Danmarks Tekniske Universitet\Dokumenter\GitHub\ee-projekt\Calculations\BuckBoost_converter_sim\BuckBoost_P-Channel-v2switch_+analogkontrolv3.asc
+V1 N001 0 15
+R1 N004 0 8
+R2 N007 N006 100
+XM1 N001 N005 N003 irl530n
+C1 N003 N002 6.7µ
+D1 N001 N002 1N4148
+Q2 N005 N007 0 0 BC547B
+R4 N002 N005 1000
+L1 N003 N004 1.9m
+C2 N004 0 470µ
+XU1 N014 N011 N008 0 N006 MAX4354
+V4 N015 0 PULSE(0 5 0 0 0 10u 20u)
+R5 N015 N014 100
+C3 N014 0 40n
+V5 N008 0 5
+D2 0 N003 1N5817
+XU2 N017 COM N008 0 COM MAX4354
+R6 N017 0 30k
+R7 N008 N017 10k
+XU3 N016 N012 N008 0 N011 MAX4354
+R9 N012 N011 10k
+R10 N012 N013 10k
+R14 COM N010 10k
+XU4 NC_01 N010 NC_02 0 N009 MAX4354
+C6 N010 N009 250n
+R3 N016 COM 10k
+R8 0 N016 10k
+D3 N010 N009 D
+R11 N004 N013 100k
+R12 N013 0 300k
+.model D D
+.lib C:\Users\simo2\OneDrive - Danmarks Tekniske Universitet\Dokumenter\LTspiceXVII\lib\cmp\standard.dio
+.model NPN NPN
+.model PNP PNP
+.lib C:\Users\simo2\OneDrive - Danmarks Tekniske Universitet\Dokumenter\LTspiceXVII\lib\cmp\standard.bjt
+.inc "C:\Users\simo2\OneDrive - Danmarks Tekniske Universitet\Dokumenter\GitHub\ee-projekt\Calculations\BuckBoost_converter_sim\9530n.spi"
+.tran 0 10000u 0
+.inc "C:\Users\simo2\OneDrive - Danmarks Tekniske Universitet\Dokumenter\GitHub\ee-projekt\Calculations\BuckBoost_converter_sim\sihl530.lib"
+.lib MAX4354.lib
+.backanno
+.end

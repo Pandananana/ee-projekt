@@ -1,0 +1,25 @@
+* C:\Users\simo2\OneDrive - Danmarks Tekniske Universitet\Dokumenter\GitHub\ee-projekt\Calculations\BuckBoost_converter_sim\BuckBoost_P-Channel-v2switch.asc
+V1 N003 0 17
+Q1 NC_01 N001 0 0 BC547B
+V2 N002 0 PULSE(0 5 0 0 0 16.4u 20u)
+R3 N002 N001 100
+R1 N006 0 8
+R2 N009 N008 333
+V3 N008 0 PULSE(0 5 0 1p 0 0u 20u)
+XM1 N003 N007 N005 irl530n
+C1 N005 N004 6.7µ
+D1 N003 N004 1N4148
+Q2 N007 N009 0 0 BC547B
+R4 N004 N007 1000
+L1 N005 N006 1.8µ
+C2 N006 0 470µ
+.model D D
+.lib C:\Users\simo2\OneDrive - Danmarks Tekniske Universitet\Dokumenter\LTspiceXVII\lib\cmp\standard.dio
+.model NPN NPN
+.model PNP PNP
+.lib C:\Users\simo2\OneDrive - Danmarks Tekniske Universitet\Dokumenter\LTspiceXVII\lib\cmp\standard.bjt
+.inc "C:\Users\simo2\OneDrive - Danmarks Tekniske Universitet\Dokumenter\GitHub\ee-projekt\Calculations\BuckBoost_converter_sim\9530n.spi"
+.tran 0 10000u 0
+.inc "C:\Users\simo2\OneDrive - Danmarks Tekniske Universitet\Dokumenter\GitHub\ee-projekt\Calculations\BuckBoost_converter_sim\sihl530.lib"
+.backanno
+.end
