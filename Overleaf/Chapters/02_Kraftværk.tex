@@ -7,8 +7,10 @@
 generatorn består af 2 motor en der skal forstille en turbine der så skal drive den anden motor som bruges som en generator.
 \subsection{Transformer}
 \section{Fuld ensretter bro}
+
 \section{Buck Converter}
-For at sikre den rigitge spænding til Energilageret, skal der implementeres en step-down/buck converter, der kan holde en output spænding på 4.8 volt med en input spænding på ca 15 volt fra generatoren. Da input spænding kan variere med op til 1 volt + og minus, er det vigtigt der indgår et feedback system så output spændingen holder den ønskede værdi og Energilagret ikke bliver overopladt
+For at sikre den rigitge spænding til Energilageret, skal der implementeres en step-down/buck converter, der kan holde en output spænding på 4.8 volt med en input spænding på ca 15 volt fra generatoren. Da input spænding kan variere med op til 1 volt + og minus, er det vigtigt der indgår et feedback system så output spændingen holder den ønskede værdi og Energilagret ikke bliver overopladt.
+
 \subsection{Kontrollering}
 For at styre Duty Cycle af PWM signalet, så converteren altid holdte 4.8V, brugte vi en Mega 2560 og samplede outputtet (som var blevet neddelt med en spændingsdeler). Derefter blev der bygget et while loop der hvert millisekund op- eller nedjusterede duty cyclen, afhængig af om ADC værdien var over eller under den ønsket værdi. Controlleren var hurtig og gjorde at Buck Converteren altid leverede 4.8V. 
 
@@ -19,7 +21,7 @@ Kraftværket skal styres så der altid leveres 15V til indgangen på Buck Conver
 Første skridt var at modellere systemets egenskaber i Matlab. Dette blev gjort ved at lave små steps på inputtet (OCRnB værdier) og måle hvordan outputtet reagerer (ADC værdier). Vi omregnede ikke til spændinger og duty cycle, da vi dermed kunne lave færre beregninger på mikrokontrolleren. Outputtet blev målt med et oscilloskop og gemt til en CSV fil som blev importeret til Matlab. Derefter kan Matlab fitte en overføringsfunktion. Dette kan ses i nedenstående graf, hvor den grå linje er det reelle output (ADC værdier) og G er den fittet overføringsfunktion. 
 
 \begin{figure}[H]
-      \includegraphics[width=\textwidth]{Dokumentation/Motor Model Fit.jpg}
+      \includegraphics[width=\textwidth]{Dokumentation/Figures/Motor Model Fit.jpg}
      \caption{System Overføringsfunktion}
      \label{fig: System Overføringsfunktion}
      \end{figure}
@@ -28,7 +30,7 @@ Første skridt var at modellere systemets egenskaber i Matlab. Dette blev gjort 
 Derefter kan PI-Lead kontrolleren nu designes. Vi vælger en phase margin på 60 grader, da det giver en god balance mellem hastighed og stabilitet. Vi tilpasser Ni og alpha værdierne indtil vi finder et system der hurtigt, men ikke så hurtigt at motoren ikke kan følge med. Nedenstående figur viser en step respons af systemet med PI-Lead kontroller. Der er en smule overshoot, men det gav ikke nogle stabilitetsproblemer.
 
 \begin{figure}[H]
-      \includegraphics[width=\textwidth]{Dokumentation/Motor PID Step Response.jpg}
+      \includegraphics[width=\textwidth]{Dokumentation/Figures/Motor PID Step Response.jpg}
      \caption{System Overføringsfunktion}
      \label{fig: System Overføringsfunktion}
      \end{figure}
@@ -39,7 +41,26 @@ Nu skal denne PID kontroller, som er en overføringsfunktion i S-domænet, omdan
 Indsæt PWM Driver schematic
 
 \section{Test}
+Følgende kravspecifikationer tilhører denne del af projektet
+\begin{enumerate}
+  \item V1 skal være 15V +/- 1 volt for en buck strøm på 100 mA
+  \item AC-generator systemet skal kunne levere 300 mA til buck konverteren.
+  \item Ved en belastningsændring fra 100mA til 300 mA skal V1 overholde krav 1, indenfor 1.0 s.
+\end{enumerate}
 
+For at teste Krav 1, belaster vi udgangen af buck converteren (4.8V) med 16$\Omega$ hvilket svarer til nogenlunde 100mA ved 15V. Det kan ses på Figur \ref{fig: Krav 1 Opfyldt} at spændingen er 14.9V, og kravet dermed er overholdt.
+\begin{figure}[H]
+      \includegraphics[width=\textwidth]{Dokumentation/Pictures/Krav1.jpg}
+     \caption{Krav 1 Opfyldt}
+     \label{fig: Krav 1 Opfyldt}
+     \end{figure}
+
+For at teste Krav 1, belaster vi udgangen af buck converteren (4.8V) med 5$\Omega$ hvilket svarer til nogenlunde 300mA ved 15V. Det kan ses på Figur \ref{fig: Krav 1 Opfyldt} at spændingen er 14.9V, og kravet dermed er overholdt.
+\begin{figure}[H]
+      \includegraphics[width=\textwidth]{Dokumentation/Pictures/Krav2.jpg}
+     \caption{Krav 2 Opfyldt}
+     \label{fig: Krav 2 Opfyldt}
+     \end{figure}
 
      
 \end{document}
