@@ -11,15 +11,16 @@
 
     \subsection{Introduktion}
 
-For at sikre kontinuerlig maksimal effekt fra solcellen anvendes et MPPT-system til at overvåge for varierende forhold og optimere systemet i realtid. Arbejdspunktet for maksimal effekt findes i en graf, der viser forholdet mellem effekt og spænding, som bruges til at korrigere for den nødvendige spænding. Systemet er blevet realiseret med en Arduino, der overvåger udgangen fra solcellen og styre en buck-konverter til at justere spændingen.
+For at sikre kontinuerlig maksimal effekt fra solcellen anvendes et MPPT-system til at overvåge for varierende forhold og optimere systemet i realtid. Et MPPT-system gør det muligt hele tiden at opnå den størst mulige effekt fra solcellen, således at så lidt effekt som muligt går til spilde. Systemet er blevet realiseret med en Arduino, der overvåger udgangen fra solcellen og genererer et PWM-signal til en buck-konverter som derved kan justere spænding og strøm for at opnå det optimale forhold. 
 
     \subsection{MPPT algoritme}
 
-    For at opnå maksimal energiudbytte fra solcellen, benyttes en MPPT-algoritme implementeret på en Arduino ATMEGA2560. Algoritmen har til formål at overvåge systemet ved at måle effekten fra solcellen, udregne det maksimale effekt punkt og levere et passende PWM signal til en buck-konverter. Der er mange forskellige typer algoritmer til at optimere energiudbytte fra en solcelle, og i dette projekt er der taget udgangspunkt i en P&O algoritme, som er blevet modificeret en smule. 
+    For at opnå maksimal energiudbytte fra solcellen, benyttes en MPPT-algoritme implementeret på en Arduino ATMEGA2560. Algoritmen har til formål at overvåge solcelle-systemet ved at måle effekten fra solcellen, udregne det maksimale effekt punkt og levere et passende PWM signal til en buck-konverter. Der er mange forskellige typer algoritmer til at optimere energiudbytte fra en solcelle, og i dette projekt er der taget udgangspunkt i en P\&O (Pertub \& Observe) algoritme, som er blevet modificeret en smule. 
     
-    Arduionen modtager ADC-målinger fra solcellen, som består i en strømmåling og en spændingsmåling. Ud fra dette beregner programmet effekten, husker den forrige effektværdi, og finder forskellen mellem dem. På denne måde er det muligt hele tiden at spore hvilken vej effekten bevæger sig, og korrigere en duty-cycle på PWM-signalet til at ligge omkring et arbejdspunkt for maksimal effekt. Algoritmen afviger fra den originale P&O-algoritme ved ikke direkte at se på forskelle i spændingsmålinger, og i stedet have en variabel til at skifte retning på hvor PWM-signalet bevæger sig hen afhængig af dens placering på den karakteristiske effekt graf for solcellen (vis graf?) Et flowchart for algoritmen er vist i 'flowchart billede...'. 
+    Arduionen modtager ADC-målinger fra solcellen, som består i en strømmåling og en spændingsmåling. Ud fra dette beregner programmet effekten, husker den forrige effektværdi, og finder forskellen mellem dem. På denne måde er det muligt hele tiden at spore hvilken vej effekten bevæger sig, og korrigere en duty-cycle på PWM-signalet til at ligge omkring et arbejdspunkt for maksimal effekt. Algoritmen afviger fra den originale P&O-algoritme ved ikke direkte at se på forskelle i spændingsmålinger, og have en variabel til at skifte retning på hvor PWM-signalet bevæger sig hen afhængig af dens placering på den karakteristiske effekt graf for solcellen (vis graf?) Et flowchart for algoritmen er vist i 'flowchart billede...'. 
+    PWM-signalets brug er forklaret i afsnittet \textit{MPPT buck}.
 
-    Undervejs er der blevet lavet mange ændringer i algoritmen og opsætningen af de forskellige elementer der bruges i programmet...
+    Undervejs er der blevet lavet mange ændringer i algoritmen og opsætningen af de forskellige elementer der bruges i programmet. 
 
 
     \subsection{MPPT buck}

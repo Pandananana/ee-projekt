@@ -4,7 +4,7 @@
 \chapter{Kraftværk} \label{Chap:Kraftværk}
 
 \section{Generator}
-generatorn består af 2 motorer en der skal forstille en turbine DC-Motor der så skal drive den anden motor som bruges som en generator. generator er en asynkron 14 polet motor med en 924 rpm/V dette output bliver så forbundet til en 3 phaset transformer. efter denne transformer bliver det forbundet til en 3 phaset full bridge rectifier. på outputtet af rectifier skal der være 15V samt den skal kunne lever 300mA. ud fra dette kan den optimale transformer opstilling findens
+Generatoren består af 2 motorer. DC motoren skal forestille at være en turbine fra et kraftværk der driver en AC generator. Generator er en asynkron 14 polet motor med en 924 rpm/V dette output bliver så forbundet til en 3 phaset transformer. Efter denne transformer bliver det forbundet til en 3 phaset full bridge rectifier. På outputtet af rectifier skal der være 15V samt den skal kunne lever 300mA. Ud fra dette kan den optimale transformer opstilling findens. DC motoren drives af et PWM signal, der kører med så høj frekvens, at det for motorens vedkommende, bliver glattet ud til en specifik spænding.
 \subsection{Transformer}
 \subsection{Fuld bridge rectifier}
 for at omdande det 3 phase output fra transformen til DC bruges der en Fuld bridge rectifier
@@ -18,9 +18,11 @@ For at sikre den rigitge spænding til Energilageret, skal der implementeres en 
 
 \subsection{Opbygning}
 Buck konverteren er opbygget efter et basic buck converter circuit, der består af en mosfet transistor, en Kondensator, en diode og en spole. Mosfet transistoren udgør selve ideen af buck converteren, det er den der åbner og lukker for inputtet med et bestemt duty cycle, som man ved at ændre også ændre på output spændingen. Ved at gøre dette får man også et step hver gang der bliver åbnet og lukket, også kaldet ripple, derfor bruges en kondensator som oplades og aflades hver gang transistoren henholdsvis er lukket og åben som minimere output ripple. yderligere minimere man ripple effektet med en spole, udover det bruges en spole også da den giver buck converteren en højere effektivitet, i modsætningen til feks en modstand som ville afgive termisk energi. Dioden er sat til ground lige før spolen for at sikre der kan flyde strøm igennem opsætningen også når mosfetten er åben. 
-I buck konverteren ved kraftværket var der problemer med at aktivere 
+I buck konverteren ved kraftværket var der problemer med at aktivere mosfetten og få PWM signalet igennem, derfor blev der forsøgt med et driver system med en BJT transistor, hvilket gav det ønskede output. 
 
-\subsubsection{}
+\subsubsection{Komponenter}
+Komponenterne som er brugt til opbygningen af buck konverteren er udvalgt ved hjælp af udregninger fra ashraf minikursus, og ud fra \ref{subsection:Buck konverter}, udover de beregnede værdier er der ved hjælp af test og målinger på kredsløbet valgt nogle enten højere eller lavere værdier for at få en buck konverter som ønsket.
+
 
 \subsection{Kontrollering}
 For at styre Duty Cycle af PWM signalet, så converteren altid holdte 4.8V, brugte vi en Mega 2560 og samplede outputtet (som var blevet neddelt med en spændingsdeler). Derefter blev der bygget et while loop der hvert millisekund op- eller nedjusterede duty cyclen, afhængig af om ADC værdien var over eller under den ønsket værdi. Controlleren var hurtig og gjorde at Buck Converteren altid leverede 4.8V. 
@@ -49,7 +51,13 @@ Derefter kan PI-Lead kontrolleren nu designes. Vi vælger en phase margin på 60
 Nu skal denne PID kontroller, som er en overføringsfunktion i S-domænet, omdannes så den kan blive implementeret i kode. Dette gøres ved at Z transformere den med en indbygget Matlab funktion, hvor vi bruger ADC samplingsraten som input. Transformationens parametre skrives til en Data.h fil, som resten af C-koden benytter. Dette gør at vi kan iterere hurtigt og præcist. Z transformationens parametre kan nemt implementeres ved at gemme forrige inputs og outputs, og gange dem med et specifikt gain. I vores tilfælde gemmes der 2 forrige outputs og 1 forrigt input. Derefter ganges hvert input/output med deres tilhørende parameterværdi og alle værdierne lægges sammen. Dette outputtes som OCRnB værdi, der benyttes af PWM timeren.
 
 \subsection{PWM Driver}
-Indsæt PWM Driver schematic
+Da Arduino Mega'en maksimalt kan levere 40mA far et enkelt output, skal der designes et driver kredsløb, der skalerer Arduinoens signal til en markant større strøm (+2A i nogle tilfælde). Dette gøres ved brug af en IRF530N power MOSFET. Figur \ref{fig: PWM Driver Schematic} viser netop dette driver kredsløb.
+\begin{figure}[H]
+      \includegraphics[width=\textwidth]{Dokumentation/Figures/PWM_Driver.png}
+     \caption{PWM Driver Schematic}
+     \label{fig: PWM Driver Schematic}
+     \end{figure}
+
 
 \section{Test}
 Følgende kravspecifikationer tilhører denne del af projektet
