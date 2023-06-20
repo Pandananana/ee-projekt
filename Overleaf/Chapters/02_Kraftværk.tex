@@ -7,7 +7,9 @@
 Generatoren består af 2 motorer. DC motoren skal forestille at være en turbine fra et kraftværk der driver en AC generator. Generator er en asynkron 14 polet motor med en 924 rpm/V dette output bliver så forbundet til en 3 phaset transformer. Efter denne transformer bliver det forbundet til en 3 phaset full bridge rectifier. På outputtet af rectifier skal der være 15V samt den skal kunne lever 300mA. Ud fra dette kan den optimale transformer opstilling findens. DC motoren drives af et PWM signal, der kører med så høj frekvens, at det for motorens vedkommende, bliver glattet ud til en specifik spænding.
 \subsection{Transformer}
 \subsection{Fuld bridge rectifier}
-for at omdande det 3 phase output fra transformen til DC bruges der en Fuld bridge rectifier
+for at omdande det 3 phase output fra transformen til DC bruges der en Fuld bridge rectifier.
+DC spænding kan beskrives ud fra 
+$$ V_{DC} = \frac{2}{\frac{2 \cdot \pi}{6}}\int_{0}^{\frac{\pi}{6}}\sqrt{3}\cdot V_f \cdot cos(\omega t) d(\omega t) = \frac{3 \cdot \sqrt{3}}{\pi} \cdot V_f = 1.654 \cdot V_f $$
 
 
 

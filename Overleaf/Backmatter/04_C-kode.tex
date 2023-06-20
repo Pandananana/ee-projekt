@@ -1,13 +1,20 @@
 \section{C-kode}
-\subsection{Buck and Motor PID}
-\lstinputlisting[language=C]{Code/Buck PID Mega/src/main.c}
-\lstinputlisting[language=C]{Code/Buck PID Mega/lib/ADC_CTC/ADC.c}
-\lstinputlisting[language=C]{Code/Buck PID Mega/lib/ADC_CTC/ADC.h}
-\lstinputlisting[language=C]{Code/Buck PID Mega/lib/Controllers/Controler.c}
-\lstinputlisting[language=C]{Code/Buck PID Mega/lib/Controllers/Controler.h}
-\lstinputlisting[language=C]{Code/Buck PID Mega/lib/Controllers/Data.h}
-\subsection{PV}
+\subsection{Buck og Boost Konverter}
+\lstinputlisting[language=C, caption=Buck Main.c]{Code/Buck PID Mega/src/main.c}
+\lstinputlisting[language=C, caption=Boost Main.c]{Code/Boost PID Mega/src/main.c}
+\lstinputlisting[language=C, caption=ADC.c]{Code/Buck PID Mega/lib/ADC_CTC/ADC.c}
+\lstinputlisting[language=C, caption=ADC.h]{Code/Buck PID Mega/lib/ADC_CTC/ADC.h}
+\lstinputlisting[language=C, caption=timer.c]{Code/Buck PID Mega/lib/Timer/timer.c}
+\lstinputlisting[language=C, caption=timer.h]{Code/Buck PID Mega/lib/Timer/timer.h}
+\lstinputlisting[language=C, caption=Controller.c]{Code/Buck PID Mega/lib/Controllers/Controler.c}
+\lstinputlisting[language=C, caption=Controller.h]{Code/Buck PID Mega/lib/Controllers/Controler.h}
 
-\subsection{Bost converter}
+\subsection{Motor PID}
+\lstinputlisting[language=C, caption=Main.c]{Code/PID Controller/src/main.c}
+\lstinputlisting[language=C, caption=Data.h]{Code/PID Controller/lib/Controllers/Data.h}
 
-\subsection{PV system}
+\subsection{Solcelle}
+\lstinputlisting[language=C, caption=Main.c]{Code/MPPT Buck Combined - Kopi/src/main.c}
+\lstinputlisting[language=C, caption=mppt.c]{Code/MPPT Buck Combined - Kopi/lib/mppt/mppt.c}
+\lstinputlisting[language=C, caption=mppt.h]{Code/MPPT Buck Combined - Kopi/lib/mppt/mppt.h}
+
