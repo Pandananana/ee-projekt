@@ -17,7 +17,7 @@
 
     For at opnå maksimalt energiudbytte fra solcellen benyttes en MPPT-algoritme, som er blevet implementeret på en Arduino ATMEGA2560. Algoritmen har til formål at overvåge solcellesystemet ved at måle effekten fra solcellen, finde det maksimale effektpunkt og levere et passende PWM-signal til en buck-konverter. Der er mange forskellige typer algoritmer til at optimere energiudbyttet fra en solcelle, og i dette projekt er der taget udgangspunkt i en P&O (Perturb & Observe)-algoritme, som er blevet modificeret en smule.
 
-    Arduionen modtager ADC-målinger fra solcellen, som består af en strømmåling og en spændingsmåling fra et analogt kredsløb. Ud fra dette beregner programmet effekten, husker den forrige effektværdi og finder forskellen mellem dgem. På denne måde er det muligt hele tiden at spore, hvilken vej effekten bevæger sig, og korrigere duty-cyclen på PWM-signalet til at ligge omkring et arbejdspunkt for maksimal effekt, som bruges af buck-konverteren. Algoritmen afviger fra den originale P&O-algoritme ved ikke direkte at se på forskelle i spændingsmålinger og derudover have en variabel til at skifte retning på, hvor PWM-signalet bevæger sig hen afhængig af dens placering på den karakteristiske effektgraf for solcellen (vis graf?). Et flowchart for algoritmen er vist i figur \ref{fig: MPPT Flowchart}.  PWM-signalets brug er videre forklaret i afsnittet "MPPT buck".
+    Arduionen modtager ADC-målinger fra solcellen, som består af en strømmåling og en spændingsmåling fra et analogt kredsløb. Ud fra dette beregner programmet effekten, husker den forrige effektværdi og finder forskellen mellem dg em. På denne måde er det muligt hele tiden at spore, hvilken vej effekten bevæger sig, og korrigere duty-cyclen på PWM-signalet til at ligge omkring et arbejdspunkt for maksimal effekt, som bruges af buck-konverteren. Algoritmen afviger fra den originale P&O-algoritme ved ikke direkte at se på forskelle i spændingsmålinger og derudover have en variabel til at skifte retning på, hvor PWM-signalet bevæger sig hen afhængig af dens placering på den karakteristiske effektgraf for solcellen (vis graf?). Et flowchart for algoritmen er vist i figur \ref{fig: MPPT Flowchart}.  PWM-signalets brug er videre forklaret i afsnittet "MPPT buck".
 
     \begin{figure}[H]
       \includegraphics[width=\textwidth]{Dokumentation/mpptflowchart.drawio (1).png}
@@ -69,16 +69,19 @@
             Det fremgår af det overordnede diagram i projektbesrkivelsen (se appendix \ref{}) at der mellem MPPT'en og 5volts reguleringen i PV-grenen skal indgå en ladekondensator med en komponentværdi på 15mF. For simplificering af kredsløbbet implementeres denne ved at anvende denne kondensator som filterkondensator og denne værdi er derfor givet.
             
             Spole
-            I valg af spole tages højde for at denne har en minimumsvørdi for at kunne køre i en kontinuert operationscyklus. Herudover har spolens værdi inflydelse på størelsen af de fluktiationer der ses i udgangsstrømmen, $\Delta I$
-            
-            
-            Kondensator
-            
+            I valg af spole tages højde for at denne har en minimumsvørdi for at kunne køre i en kontinuert operationscyklus. Herudover har spolens værdi inflydelse på størelsen af de fluktiationer der ses i udgangsstrømmen, $\Delta I$.\newline
+
+            Spoleværdien kan estimeres ud fra følgende ligning:
+            $$L = \frac{1-k}{16 f^2 C}$$
+            $$\rightarrow L = \frac{1-0}{16\cdot 50\cdot 10^3 Hz \cdot 15\cdot 10^{-3}F} \rightarrow 1,33nF$$
+            \newline
+            Ved denne værdi vil udsvingene i udgangstrømmen dog være for stor. Af denne årsag vælges en støre spoleværdi hvor den maksimale udsvinging ikke overgår 2\% af solcellens udgangsstrøm ved maksimal effekt.
+            $$\Delta I_{2\%} = 0,02 \cdot I_{MP} = 0,02 \cdot 0,66A = 13,2mA$$
+            $$L = \frac{U_s(1-k)k}{f\cdot \Delta I} = \frac{15 V\cdot (1-0,2)\cdot 0,2}{50\cdot 10^3 Hz \cdot 13,2 \cdot 10^{-3} A} = 3,64mH$$\newline
             
             
             Diode
             En Shotky diode tænkes at anvendes da disse har et lavere fremadrettet spændingsfald. Dette bør føre til en højere effektivitet, og en sådan diode forsøges derfor at vælges i implementeringen.
-            
             
             
         \subsubsection{Test}
