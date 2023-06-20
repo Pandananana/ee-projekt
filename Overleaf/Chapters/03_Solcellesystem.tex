@@ -32,6 +32,13 @@ Solcelle-delen er den primære leverandør af energi til systemet. Det er derfor
         \caption{Strøm- og spændingsmåler kredsløb}
         \label{fig: Strøm- og spændingsmåler kredsløb}
         \end{figure}
+        
+        \begin{figure}[H]
+        \includegraphics[scale = 0.08]{Dokumentation/Pictures/PV_strømmåler.jpg}
+        \caption{Strøm/spændingsmåler til regulering af solpanelets udgangsspænding og strøm.}
+        \label{pic: MPPTbuck}
+        \end{figure}
+        
 
 \section{Maximum Power Point Tracking}
 \subsection{Introduktion}
@@ -40,20 +47,19 @@ For at sikre kontinuerlig maksimal effekt fra solcellen anvendes et MPPT-system 
 
 \subsection{MPPT algoritme}
 \subsubsection{Designovervejelser}
-    For at opnå maksimalt energiudbytte fra solcellen benyttes en MPPT-algoritme, som er blevet implementeret på en Arduino ATMEGA2560. Algoritmen har til formål at overvåge solcellesystemet ved at måle effekten fra solcellen, finde det maksimale effektpunkt og levere et passende PWM-signal til en buck-konverter. Der er mange forskellige typer algoritmer til at optimere energiudbyttet fra en solcelle, og i dette projekt er der taget udgangspunkt i en P&O (Perturb & Observe)-algoritme, som er blevet modificeret en smule.
+For at opnå maksimalt energiudbytte fra solcellen benyttes en MPPT-algoritme, som er blevet implementeret på en Arduino ATMEGA2560. Algoritmen har til formål at overvåge solcellesystemet ved at måle effekten fra solcellen, finde det maksimale effektpunkt og levere et passende PWM-signal til en buck-konverter. Der er mange forskellige typer algoritmer til at optimere energiudbyttet fra en solcelle, og i dette projekt er der taget udgangspunkt i en P \& O (Perturb \& Observe)-algoritme, som er blevet modificeret en smule.
 
-    \subsubsection{Implementering}
-    Arduionen modtager ADC-målinger fra solcellen, som består af en strømmåling og en spændingsmåling fra et analogt kredsløb. Ud fra dette beregner programmet effekten, husker den forrige effektværdi og finder forskellen mellem dg em. På denne måde er det muligt hele tiden at spore, hvilken vej effekten bevæger sig, og korrigere duty-cyclen på PWM-signalet til at ligge omkring et arbejdspunkt for maksimal effekt, som bruges af buck-konverteren. Algoritmen afviger fra den originale P&O-algoritme ved ikke direkte at se på forskelle i spændingsmålinger og derudover have en variabel til at skifte retning på, hvor PWM-signalet bevæger sig hen afhængig af dens placering på den karakteristiske effektgraf for solcellen. Et flowchart for algoritmen er vist i figur \ref{fig: MPPT Flowchart}.
+\subsubsection{Implementering}
+Arduionen modtager ADC-målinger fra solcellen, som består af en strømmåling og en spændingsmåling fra et analogt kredsløb. Ud fra dette beregner programmet effekten, husker den forrige effektværdi og finder forskellen mellem dg em. På denne måde er det muligt hele tiden at spore, hvilken vej effekten bevæger sig, og korrigere duty-cyclen på PWM-signalet til at ligge omkring et arbejdspunkt for maksimal effekt, som bruges af buck-konverteren. Algoritmen afviger fra den originale P\&O-algoritme ved ikke direkte at se på forskelle i spændingsmålinger og derudover have en variabel til at skifte retning på, hvor PWM-signalet bevæger sig hen afhængig af dens placering på den karakteristiske effektgraf for solcellen. Et flowchart for algoritmen er vist i figur \ref{fig: MPPT Flowchart}.
         
-    \begin{figure}[H]
-      \includegraphics[width=\textwidth]{Dokumentation/mpptflowchart.drawio (1).png}
-     \caption{MPPT-algoritme flowchart}
-     \label{fig: MPPT Flowchart}
-     \end{figure}
-    
-    Undervejs er der blevet lavet mange ændringer i algoritmen og opsætningen af de forskellige elementer, der bruges i programmet. Vi er stødt på mange udfordringer mht. opsætning og behandling af analoge måleværdier, timere og generel stabilitet af systemet og har måttet bruge en del tid på at overkomme disse problemer. Der er til sidst i projektet fundet en effektiv løsning, som giver os den ønskede effekt af et MPPT-system.
+\begin{figure}[H]
+ \includegraphics[width=\textwidth]{Dokumentation/mpptflowchart.drawio (1).png}
+  \caption{MPPT-algoritme flowchart}
+  \label{fig: MPPT Flowchart}
+  \end{figure}
+Undervejs er der blevet lavet mange ændringer i algoritmen og opsætningen af de forskellige elementer, der bruges i programmet. Vi er stødt på mange udfordringer mht. opsætning og behandling af analoge måleværdier, timere og generel stabilitet af systemet og har måttet bruge en del tid på at overkomme disse problemer. Der er til sidst i projektet fundet en effektiv løsning, som giver os den ønskede effekt af et MPPT-system.
 
-    MPPT-koden er vedhæftet som bilag.
+MPPT-koden er vedhæftet som bilag.
 
 
     \subsection{MPPT buck}
@@ -110,7 +116,13 @@ For at sikre kontinuerlig maksimal effekt fra solcellen anvendes et MPPT-system 
             En Shotky diode tænkes at anvendes da disse har et lavere fremadrettet spændingsfald. Dette bør føre til en højere effektivitet, og en sådan diode forsøges derfor at vælges i implementeringen.
 
             Opbygning
-            opbygningen laves på hulprint for at undgå at skade et fumlebræt ved højere effektværdier, samt for at undgå støj på signalerne. Opbygningen kan ses i billede \ref{}
+            opbygningen laves på hulprint for at undgå at skade et fumlebræt ved højere effektværdier, samt for at undgå støj på signalerne. Opbygningen kan ses i billede \ref{pic: MPPTbuck}
+
+            \begin{figure}[H]
+            \includegraphics[scale = 0.1]{Dokumentation/Pictures/PV_MPPTbuck.jpg}
+            \caption{Buckconverter til MPPT regulering af solpanel}
+            \label{pic: MPPTbuck}
+            \end{figure}
             
         \subsubsection{Test}
             Til test af hardwaren kobles en $68\Omega$ effektmodstand til MPPT-buckconverterens udgang, solpanelet kobles på dens indgang, og en signalgenerator anvendes til at give et 5V PWM-signal til kontrolbenet. Diverse spændinger måles da i systemet og resultaterne som ses i figur \ref{fig: Testresultater MPPT-Buckconverter} fås på baggrund heraf.\newline
@@ -125,6 +137,7 @@ For at sikre kontinuerlig maksimal effekt fra solcellen anvendes et MPPT-system 
 \section{Udgangsconverter}
         
     \subsection{Delkrav}
+        Skal kunne regulere en vilkårlig spænding fra MPPT'en til 5V.
         
     \subsection{Designovervejelser}
         
@@ -143,14 +156,21 @@ For at sikre kontinuerlig maksimal effekt fra solcellen anvendes et MPPT-system 
 
             
     \subsection{Implementering}
-        
+        \begin{figure}[H]
+        \includegraphics[scale = 0.1]{Dokumentation/Pictures/PV_udgangsbuck5V.jpg}
+        \caption{Buckconverter til at regulere spændingen fra solpanelet til 5V til anvendelse af opladning af superkondesatoren}
+        \label{pic: MPPTbuck}
+        \end{figure}
+
+    
     \subsection{Test}
+        Som en del af den samlede funktionstest i afsnit \ref{afsnit: testafsnit} kan det ses at udgangsspændingen holdes på ca. 5V når indgangsspændingen varieres, indtil et punkt hvor solcellen ikke kan levere en høj nok effekt hvor spændingen så falder.
         
-    \subsection{Delkonklusion}
 
-\section{Test af solcellesystem}
+\section{Test af solcellesystem} \label{afsnit: testafsnit}
 
-For at lave en test på solcelle-systemet er der målt en række værdier og forskellige loads. Grafen for solcellens spænding og strøm samt spændingen over load over en række forskellige load-modstandsværdier er vist nedenfor.
+\subsection{Funktionstest}
+For at lave en test på solcelle-systemet, målte vi en række værdier over forskellige loads. Grafen for solcellens spænding og strøm samt spændingen over loaden over en række forskellige load-modstandsværdier er vist nedenfor.
 
     \begin{figure}[H]
         \includegraphics[width=\textwidth]{Dokumentation/Figures/PV_FuldTest.png}
@@ -158,7 +178,16 @@ For at lave en test på solcelle-systemet er der målt en række værdier og for
         \label{fig: Test af solcelle-system}
         \end{figure}
 
-        Diagrammet viser at spændingen bliver holdt på 5V på udgangenstrinnet over forskellige solcelle spændinger og strømme samt forskellige loads. Kredsløbet fungere som ønsket. 
-    
+        Diagrammet viser at spændingen bliver holdt på 5V på udgangenstrinnet over forskellige solcelle-spændinger og strømme samt forskellige loads. Og det kan konkluderes at kredsløbet fungerer som ønsket og i henhold til kravspecifikationerne.
+
+\subsection{Effektivitetstest}
+For at teste effektiviteten af convertersystemet til solpanelet måles den leverede strøm fra solpanelet til systemet, samt strømmen gennem en varierende belastningsmodstand. Herudover måles spændingsfaldet over modstanden, samt spændingen over solpanelets to terminaler. Dette anvendes til at udregne effekten leveret af solpanelet, samt effekten leveret til belastningen, og videre udregnes forholdet mellem effekten leveret til belastningen, samt effekten leveret fra solpanelet 
+for at finde effektiviteten af systemet. Resultaterne af denne test kan ses i figur \ref{}    
+    \begin{figure}[H]
+        \includegraphics[width=\textwidth]{Dokumentation/Figures/PV}
+        \caption{Test af solcelle-system}
+        \label{fig: Test af solcelle-system}
+        \end{figure}
+
         
 \end{document}
