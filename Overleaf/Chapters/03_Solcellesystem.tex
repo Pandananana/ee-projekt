@@ -14,8 +14,12 @@
 For at sikre kontinuerlig maksimal effekt fra solcellen anvendes et MPPT-system til at overvåge for varierende forhold og optimere systemet i realtid. Arbejdspunktet for maksimal effekt findes i en graf, der viser forholdet mellem effekt og spænding, som bruges til at korrigere for den nødvendige spænding. Systemet er blevet realiseret med en Arduino, der overvåger udgangen fra solcellen og styre en buck-konverter til at justere spændingen.
 
     \subsection{MPPT algoritme}
+
+    For at opnå maksimal energiudbytte fra solcellen, benyttes en MPPT-algoritme implementeret på en Arduino ATMEGA2560. Algoritmen har til formål at overvåge systemet ved at måle effekten fra solcellen, udregne det maksimale effekt punkt og levere et passende PWM signal til en buck-konverter. Der er mange forskellige typer algoritmer til at optimere energiudbytte fra en solcelle, og i dette projekt er der taget udgangspunkt i en P&O algoritme, som er blevet modificeret en smule. 
     
-    For at implementere en algoritme der kan overvåge MPP-punktet, benyttes en Arduino ATMEGA2560. Arduionen modtager ADC-målinger fra solcellen og tager udgangspunkt i en modificeret Pertubation & Observation algoritme. 
+    Arduionen modtager ADC-målinger fra solcellen, som består i en strømmåling og en spændingsmåling. Ud fra dette beregner programmet effekten, husker den forrige effektværdi, og finder forskellen mellem dem. På denne måde er det muligt hele tiden at spore hvilken vej effekten bevæger sig, og korrigere en duty-cycle på PWM-signalet til at ligge omkring et arbejdspunkt for maksimal effekt. Algoritmen afviger fra den originale P&O-algoritme ved ikke direkte at se på forskelle i spændingsmålinger, og i stedet have en variabel til at skifte retning på hvor PWM-signalet bevæger sig hen afhængig af dens placering på den karakteristiske effekt graf for solcellen (vis graf?) Et flowchart for algoritmen er vist i 'flowchart billede...'. 
+
+    Undervejs er der blevet lavet mange ændringer i algoritmen og opsætningen af de forskellige elementer der bruges i programmet...
 
 
     \subsection{MPPT buck}
@@ -31,40 +35,75 @@ For at sikre kontinuerlig maksimal effekt fra solcellen anvendes et MPPT-system 
                 \item Skal være effektiv nok til at tillade videre regulering af udgangsspændingen til 5V og herefter kunne oplade en kondensator.
             \end{enumerate}
             
-        
         \subsubsection{Designovervejelser}
-        
+            
+            Switch
+            I valg af switch overvejes forskellige opsætninger af switches som vist 
+            
+            
+            Spole
+            
+            
+            
+            Kondensator
+            
+            
+            
+            Diode
+            
+            
+            
+            
         \subsubsection{Implementering}
-        
+            
+            
+            
+            
         \subsubsection{Test}
-        
+            
+            
+            
+            
         \subsubsection{delkonklusion}
-
+            
+            
+            
+            
     \subsection{MPPT strøm/spændingsmåler}
-
+            
         \subsubsection{Delkrav}
-        
+            
         \subsubsection{Designovervejelser}
-        
+            
         \subsubsection{Implementering}
-        
+            
         \subsubsection{Test}
-        
+            
         \subsubsection{delkonklusion}
-    
-        
-        
+            
+            
+                    
 \section{Udgangsconverter}
-
+        
     \subsection{Delkrav}
-    
+        
     \subsection{Designovervejelser}
-    
+            
+            Switch
+
+            Spole
+
+            Kondensator
+
+            Diode
+
+
+            
     \subsection{Implementering}
-    
+        
     \subsection{Test}
-    
+        
     \subsection{Delkonklusion}
-
-
+        
+        
 \end{document}

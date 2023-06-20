@@ -1,5 +1,13 @@
 \documentclass[../main.tex]{subfiles}
 \begin{document}
-\chapter{Diskusion} \label{Chap:Diskusion}
+\chapter{Diskussion} \label{Chap:Diskusion}
+\section{Vurdering af projekt}
+Projektet har været meget lærerigt og udfordrende. Det har været dejligt at kunne benytte vores teoretiske viden på en praktisk måde. Vi har fået en bedre forståelse for hvordan el-nettet fungerer, også selvom alle komponenterne er drastisk nedskaleret ift. deres større modparter. Det har især været spændende at modellere, optimere og implementere en PID kontroller i C-kode, hvor vi før kun havde haft det i Matlab. Derudover er vi blevet meget bedre til at designe buck og boost konvertere, så spændinger og strømme nemt og effektivt kan justeres.
+
+\section{Diskussion af resultater}
+Resultaterne der bruges til at godekende kravspecifikationerne blev delvist målt mens delene af projektet var adskilt, men også mens systemet var samlet. Dette kan give en lille afvigelse fra den reel værdi. For at målte spændinger benyttede vi et oscilloskop, der havde mere en rigelig præcision til at overholde kravene i kravspecifikationerne. 
+
+\section{Videre Arbejde}
+Dette projekt ligger op til at man nemt kan arbejde videre på det. Hvis der var mere tid til overs, ville vi kunne lave en dybdegående analyse af effektiviteten af systemet, og optimere de dele der spildte mest energi. Derudover kunne vi også benytte en anden energi-lagringstype, evt. et litium batteri. Alle buck konvertere og boost konvertere benytter en relativ primitiv kontroller-algoritme, og disse kunne optimeres ved at implementere en PID kontroller, enten digitalt ligesom i PWM driveren, eller analogt som der blev forsøgt til 5V buck konverteren fra solcelle-delen af projektet. 
 
 \end{document}
