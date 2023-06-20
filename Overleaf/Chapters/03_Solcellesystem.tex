@@ -20,7 +20,7 @@ Solcelle-delen er den primære leverandør af energi til systemet. Det er derfor
             
         \subsubsection{Implementering}
 
-        En effektmodstand på 0,1 ohm er brugt til strømmålingen, hvorefter spændingen over den ganges op med en faktor 75 gennem et op-amp.
+        En effektmodstand på 0,1 ohm er brugt til strømmålingen, hvorefter spændingen over den ganges op med en faktor 75 gennem et op-amp differe
 
         \begin{figure}[H]
         \includegraphics[width=\textwidth]{Dokumentation/målekredsløb.png}
@@ -29,19 +29,15 @@ Solcelle-delen er den primære leverandør af energi til systemet. Det er derfor
         \end{figure}
 
 \section{Maximum Power Point Tracking}
-
     \subsection{Introduktion}
 
     For at sikre kontinuerlig maksimal effekt fra solcellen anvendes et MPPT-system til at overvåge for varierende forhold og optimere systemet i realtid. Et MPPT-system gør det muligt hele tiden at opnå den størst mulige effekt fra solcellen, således at så lidt effekt som muligt går til spilde. Systemet er blevet realiseret med en Arduino, der overvåger udgangen fra solcellen og genererer et PWM-signal til en buck-konverter som derved kan justere spænding og strøm for at opnå det optimale forhold. 
 
     \subsection{MPPT algoritme}
-
     \subsubsection{Designovervejelser}
-
     For at opnå maksimalt energiudbytte fra solcellen benyttes en MPPT-algoritme, som er blevet implementeret på en Arduino ATMEGA2560. Algoritmen har til formål at overvåge solcellesystemet ved at måle effekten fra solcellen, finde det maksimale effektpunkt og levere et passende PWM-signal til en buck-konverter. Der er mange forskellige typer algoritmer til at optimere energiudbyttet fra en solcelle, og i dette projekt er der taget udgangspunkt i en P&O (Perturb & Observe)-algoritme, som er blevet modificeret en smule.
 
     \subsubsection{Implementering}
-
     Arduionen modtager ADC-målinger fra solcellen, som består af en strømmåling og en spændingsmåling fra et analogt kredsløb. Ud fra dette beregner programmet effekten, husker den forrige effektværdi og finder forskellen mellem dg em. På denne måde er det muligt hele tiden at spore, hvilken vej effekten bevæger sig, og korrigere duty-cyclen på PWM-signalet til at ligge omkring et arbejdspunkt for maksimal effekt, som bruges af buck-konverteren. Algoritmen afviger fra den originale P&O-algoritme ved ikke direkte at se på forskelle i spændingsmålinger og derudover have en variabel til at skifte retning på, hvor PWM-signalet bevæger sig hen afhængig af dens placering på den karakteristiske effektgraf for solcellen. Et flowchart for algoritmen er vist i figur \ref{fig: MPPT Flowchart}.
         
     \begin{figure}[H]
@@ -124,15 +120,21 @@ Solcelle-delen er den primære leverandør af energi til systemet. Det er derfor
     \subsection{Delkrav}
         
     \subsection{Designovervejelser}
-            
-            Switch
-
-            Spole
-
-            Kondensator
-
-            Diode
-
+        
+        Switch
+        
+        Spole
+        
+        Kondensator
+        
+        Diode
+        
+        
+        \begin{figure}[H]
+            \includegraphics[width=\textwidth]{Dokumentation/Figures/PV_Buck_x-5V.png}
+            \caption{Diagram over opstillingen af 5V reguleringsbuckconverteren}
+            \label{fig: Testresultater MPPT-Buckconverter}
+        \end{figure}
 
             
     \subsection{Implementering}
