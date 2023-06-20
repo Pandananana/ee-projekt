@@ -4,12 +4,20 @@
 \chapter{Kraftværk} \label{Chap:Kraftværk}
 
 \section{Generator}
-generatorn består af 2 motor en der skal forstille en turbine DC-Motor der så skal drive den anden motor som bruges som en generator. generator er en asynkron 14 polet motor med en 924 rpm/V
+generatorn består af 2 motorer en der skal forstille en turbine DC-Motor der så skal drive den anden motor som bruges som en generator. generator er en asynkron 14 polet motor med en 924 rpm/V dette output bliver så forbundet til en 3 phaset transformer. efter denne transformer bliver det forbundet til en 3 phaset full bridge rectifier. på outputtet af rectifier skal der være 15V samt den skal kunne lever 300mA. ud fra dette kan den optimale transformer opstilling findens
 \subsection{Transformer}
-\section{Fuld ensretter bro}
+\subsection{Fuld bridge rectifier}
+for at omdande det 3 phase output fra transformen til DC bruges der en Fuld bridge rectifier
+
+
+
+
 
 \section{Buck Converter}
 For at sikre den rigitge spænding til Energilageret, skal der implementeres en step-down/buck converter, der kan holde en output spænding på 4.8 volt med en input spænding på ca 15 volt fra generatoren. Da input spænding kan variere med op til 1 volt + og minus, er det vigtigt der indgår et feedback system så output spændingen holder den ønskede værdi og Energilagret ikke bliver overopladt.
+
+\subsection{Opbygning}
+Buck konverteren er opbygget efter et basic buck converter circuit, der består af en mosfet transistor, en Kondensator, en diode og en spole. Mosfet transistoren udgør selve ideen af buck converteren, det er den der åbner og lukker for inputtet med et bestemt duty cycle, som man ved at ændre også ændre på output spændingen. Ved at gøre dette får man også et step hver gang der bliver åbnet og lukket, også kaldet ripple, derfor bruges en kondensator som oplades og aflades hver gang transistoren henholdsvis er lukket og åben som minimere output ripple. yderligere minimere man ripple effektet med en spole, udover det bruges en spole også da den giver buck converteren en højere effektivitet, i modsætningen til feks en modstand som ville afgive termisk energi. 
 
 \subsection{Kontrollering}
 For at styre Duty Cycle af PWM signalet, så converteren altid holdte 4.8V, brugte vi en Mega 2560 og samplede outputtet (som var blevet neddelt med en spændingsdeler). Derefter blev der bygget et while loop der hvert millisekund op- eller nedjusterede duty cyclen, afhængig af om ADC værdien var over eller under den ønsket værdi. Controlleren var hurtig og gjorde at Buck Converteren altid leverede 4.8V. 
