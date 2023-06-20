@@ -47,30 +47,28 @@ Kraftværket skal styres så der altid leveres 15V til indgangen på Buck Conver
 \subsection{Modellering}
 Første skridt var at modellere systemets egenskaber i Matlab. Dette blev gjort ved at lave små steps på inputtet (OCRnB værdier) og måle hvordan outputtet reagerer (ADC værdier). Vi omregnede ikke til spændinger og duty cycle, da vi dermed kunne lave færre beregninger på mikrokontrolleren. Outputtet blev målt med et oscilloskop og gemt til en CSV fil som blev importeret til Matlab. Derefter kan Matlab fitte en overføringsfunktion. Dette kan ses i nedenstående graf, hvor den grå linje er det reelle output (ADC værdier) og G er den fittet overføringsfunktion. 
 
-\begin{figure}[H]
+\begin{figure}[h]
       \includegraphics[width=\textwidth]{Dokumentation/Figures/Motor Model Fit.jpg}
      \caption{System Overføringsfunktion}
      \label{fig: System Overføringsfunktion}
-     \end{figure}
-
+\end{figure}
 \subsection{PI-Lead Kontroller}
 Derefter kan PI-Lead kontrolleren nu designes. Vi vælger en phase margin på 60 grader, da det giver en god balance mellem hastighed og stabilitet. Vi tilpasser Ni og alpha værdierne indtil vi finder et system der hurtigt, men ikke så hurtigt at motoren ikke kan følge med. Nedenstående figur viser en step respons af systemet med PI-Lead kontroller. Der er en smule overshoot, men det gav ikke nogle stabilitetsproblemer.
-
-\begin{figure}[H]
+\begin{figure}[h]
       \includegraphics[width=\textwidth]{Dokumentation/Figures/Motor PID Step Response.jpg}
      \caption{System Overføringsfunktion}
      \label{fig: System Overføringsfunktion}
-     \end{figure}
-
+\end{figure}
+g
 Nu skal denne PID kontroller, som er en overføringsfunktion i S-domænet, omdannes så den kan blive implementeret i kode. Dette gøres ved at Z transformere den med en indbygget Matlab funktion, hvor vi bruger ADC samplingsraten som input. Transformationens parametre skrives til en Data.h fil, som resten af C-koden benytter. Dette gør at vi kan iterere hurtigt og præcist. Z transformationens parametre kan nemt implementeres ved at gemme forrige inputs og outputs, og gange dem med et specifikt gain. I vores tilfælde gemmes der 2 forrige outputs og 1 forrigt input. Derefter ganges hvert input/output med deres tilhørende parameterværdi og alle værdierne lægges sammen. Dette outputtes som OCRnB værdi, der benyttes af PWM timeren.
 
 \subsection{PWM Driver}
 Da Arduino Mega'en maksimalt kan levere 40mA far et enkelt output, skal der designes et driver kredsløb, der skalerer Arduinoens signal til en markant større strøm (+2A i nogle tilfælde). Dette gøres ved brug af en IRF530N power MOSFET. Figur \ref{fig: PWM Driver Schematic} viser netop dette driver kredsløb.
-\begin{figure}[H]
+\begin{figure}[h]
       \includegraphics[width=\textwidth]{Dokumentation/Figures/PWM_Driver.png}
      \caption{PWM Driver Schematic}
      \label{fig: PWM Driver Schematic}
-     \end{figure}
+\end{figure}
 
 \section{Implementering}
 Kraftværkets diskrete komponenter implementeres på et samlet print ud fra følgende diagram \ref{fig: Kraftverk_diagram_samlet}
@@ -78,19 +76,19 @@ Kraftværkets diskrete komponenter implementeres på et samlet print ud fra føl
       \includegraphics[width=\textwidth]{Dokumentation/Figures/Kraftverk_diagram_samlet.png}
      \caption{Diagram over kraftværkets diskrete komponenter}
      \label{fig: Kraftverk_diagram_samlet}
-     \end{figure}
+\end{figure}
 Ud fra dette diagram designes et print, og dette fremstilles, se billedet.
 \begin{figure}[H]
       \includegraphics[scale = 0.2]{Dokumentation/Pictures/PCB_kraft.jpg}
      \caption{Billed af kraftværk pcb}
      \label{fig: Kraftverk_pcb}
-     \end{figure}
+\end{figure}
 Det komplette kraftværk bliver nu samlet, og der laves systemtest, se billedet.
 \begin{figure}[H]
       \includegraphics[width=\textwidth]{Dokumentation/Pictures/kraftverk_total.jpg}
      \caption{Billed det totale kraftværk}
      \label{fig: Kraftverk_total}
-     \end{figure}
+\end{figure}
 
 \section{Test}
 Følgende kravspecifikationer tilhører denne del af projektet:
@@ -105,21 +103,21 @@ For at teste Krav 1, belaster vi udgangen af buck konverteren (4.8V) med 16$\Ome
       \includegraphics[width=\textwidth]{Dokumentation/Pictures/Krav1.jpg}
      \caption{Krav 1 Opfyldt}
      \label{fig: Krav 1 Opfyldt}
-     \end{figure}
+\end{figure}
 
 For at teste Krav 2, belaster vi udgangen af buck konverteren (4.8V) med 5$\Omega$ hvilket svarer til nogenlunde 300mA ved 15V. Det kan ses på Figur \ref{fig: Krav 2 Opfyldt} at spændingen er 14.9V, og kravet dermed er overholdt.
 \begin{figure}[H]
       \includegraphics[width=\textwidth]{Dokumentation/Pictures/Krav2.jpg}
      \caption{Krav 2 Opfyldt}
      \label{fig: Krav 2 Opfyldt}
-     \end{figure}
+\end{figure}
 
 For at teste Krav 3, belaster vi udgangen af buck konverteren (4.8V) med 5$\Omega$ og skifter den derefter hurtigt til 164$\Omega$ hvilket svarer til nogenlunde at hoppe fra 100mA til 300mA ved 15V. Det kan ses på Figur \ref{fig: Krav 3 Opfyldt} at spændingen er -1V efter 1 sekund, og kravet dermed er overholdt.
 \begin{figure}[H]
       \includegraphics[width=\textwidth]{Dokumentation/Pictures/Krav3.jpg}
      \caption{Krav 3 Opfyldt}
      \label{fig: Krav 3 Opfyldt}
-     \end{figure}
+\end{figure}
 
 De tre krav er allesammen overholdt, og testen er dermed en succes. 
 

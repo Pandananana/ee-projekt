@@ -182,11 +182,14 @@ For at lave en test på solcelle-systemet, målte vi en række værdier over for
 
 \subsection{Effektivitetstest}
 For at teste effektiviteten af convertersystemet til solpanelet måles den leverede strøm fra solpanelet til systemet, samt strømmen gennem en varierende belastningsmodstand. Herudover måles spændingsfaldet over modstanden, samt spændingen over solpanelets to terminaler. Dette anvendes til at udregne effekten leveret af solpanelet, samt effekten leveret til belastningen, og videre udregnes forholdet mellem effekten leveret til belastningen, samt effekten leveret fra solpanelet 
-for at finde effektiviteten af systemet. Resultaterne af denne test kan ses i figur \ref{}    
+for at finde effektiviteten af systemet. Resultaterne af denne test kan ses i figur \ref{fig: Test af solcelle-systemets effektivitet}.\newline
+I resultatet af testen ses det hvordan effektiviteten af systemet stiger ved højere belastning. Dette skyldes sandsynligvis at systemet har en række konstante tab, som ved lave belastninger udgør en støre andel af den samlede energi der trækkes fra solpanelet end ved en høj belastning, hvor de konstante tab er relativt små.\newline
+
+Effektiviteten er bedre en hvad vi havde regnet med og er i den forstand tilfredstillende. Det bør dog nævnes at denne bør have kunnet forbedres ved mere præcist at vælge modstandende der anvendes i switch-kredsløbende, samt at ændre MPPT-buckconverterens switch til en bootstrapped opstilling.
     \begin{figure}[H]
-        \includegraphics[width=\textwidth]{Dokumentation/Figures/PV}
-        \caption{Test af solcelle-system}
-        \label{fig: Test af solcelle-system}
+        \includegraphics[width=\textwidth]{Dokumentation/Figures/PV_effektivitetstæst}
+        \caption{Test af solcelle-systemets effeltivitet.}
+        \label{fig: Test af solcelle-systemets effektivitet}
         \end{figure}
 
         
