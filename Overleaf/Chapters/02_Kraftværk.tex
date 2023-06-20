@@ -38,7 +38,6 @@ I buck konverteren ved kraftværket var der problemer med at aktivere mosfetten 
 \subsubsection{Komponenter}
 Komponenterne som er brugt til opbygningen af buck konverteren er udvalgt ved hjælp af udregninger fra ashraf minikursus, og ud fra \ref{subsection:Buck konverter}, udover de beregnede værdier er der ved hjælp af test og målinger på kredsløbet valgt nogle enten højere eller lavere værdier for at få en buck konverter som ønsket.
 
-
 \subsection{Kontrollering}
 For at styre Duty Cycle af PWM signalet, så converteren altid holdte 4.8V, brugte vi en Mega 2560 og samplede outputtet (som var blevet neddelt med en spændingsdeler). Derefter blev der bygget et while loop der hvert millisekund op- eller nedjusterede duty cyclen, afhængig af om ADC værdien var over eller under den ønsket værdi. Controlleren var hurtig og gjorde at Buck Converteren altid leverede 4.8V. 
 
@@ -82,15 +81,15 @@ Kraftværkets diskrete komponenter implementeres på et samlet print ud fra føl
      \end{figure}
 Ud fra dette diagram designes et print, og dette fremstilles, se billedet.
 \begin{figure}[H]
-      \includegraphics[width=\textwidth]{Dokumentation/Pictures/PCB_kraft.jpg}
+      \includegraphics[scale = 0.2]{Dokumentation/Pictures/PCB_kraft.jpg}
      \caption{Billed af kraftværk pcb}
      \label{fig: Kraftverk_pcb}
      \end{figure}
 Det komplette kraftværk bliver nu samlet, og der laves systemtest, se billedet.
 \begin{figure}[H]
-      \includegraphics[width=\textwidth]{Dokumentation/Pictures/PCB_kraft.jpg}
-     \caption{Billed af kraftværk pcb}
-     \label{fig: Kraftverk_pcb}
+      \includegraphics[width=\textwidth]{Dokumentation/Pictures/kraftverk_total.jpg}
+     \caption{Billed det totale kraftværk}
+     \label{fig: Kraftverk_total}
      \end{figure}
 
 \section{Test}

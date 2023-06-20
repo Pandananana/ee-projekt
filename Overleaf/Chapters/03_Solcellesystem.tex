@@ -20,7 +20,12 @@ Solcelle-delen er den primære leverandør af energi til systemet. Det er derfor
             
         \subsubsection{Implementering}
 
-        En effektmodstand på 0,1 ohm er brugt til strømmålingen, hvorefter spændingen over den ganges op med en faktor 75 gennem et op-amp.
+        En effektmodstand på 0,1 ohm er brugt til strømmålingen, hvorefter spændingen over den ganges op med en faktor 75 gennem et op-amp differenskoblingstrin. På den måde sikre vi at den maksimale indgangsstrøm til arduionen ikke overstiger 5V, da det er den højest mulige strøm ganget forstærkningen der kan leveres.
+
+        Spændingsmåleren måler over en spændingsdeler som forstærkes 2,26/10-dele. Derved vil den højest mulige spænding fra solcellen maksimalt være 5V på Arduionens indgang.
+
+        Måle-kredsløbet er vist nedenfor. 
+        
 
         \begin{figure}[H]
         \includegraphics[width=\textwidth]{Dokumentation/målekredsløb.png}
@@ -29,12 +34,12 @@ Solcelle-delen er den primære leverandør af energi til systemet. Det er derfor
         \end{figure}
 
 \section{Maximum Power Point Tracking}
-    \subsection{Introduktion}
+\subsection{Introduktion}
 
-    For at sikre kontinuerlig maksimal effekt fra solcellen anvendes et MPPT-system til at overvåge for varierende forhold og optimere systemet i realtid. Et MPPT-system gør det muligt hele tiden at opnå den størst mulige effekt fra solcellen, således at så lidt effekt som muligt går til spilde. Systemet er blevet realiseret med en Arduino, der overvåger udgangen fra solcellen og genererer et PWM-signal til en buck-konverter som derved kan justere spænding og strøm for at opnå det optimale forhold. 
+For at sikre kontinuerlig maksimal effekt fra solcellen anvendes et MPPT-system til at overvåge for varierende forhold og optimere systemet i realtid. Et MPPT-system gør det muligt hele tiden at opnå den størst mulige effekt fra solcellen, således at så lidt effekt som muligt går til spilde. Systemet er blevet realiseret med en Arduino, der overvåger udgangen fra solcellen og genererer et PWM-signal til en buck-konverter som derved kan justere spænding og strøm for at opnå det optimale forhold. 
 
-    \subsection{MPPT algoritme}
-    \subsubsection{Designovervejelser}
+\subsection{MPPT algoritme}
+\subsubsection{Designovervejelser}
     For at opnå maksimalt energiudbytte fra solcellen benyttes en MPPT-algoritme, som er blevet implementeret på en Arduino ATMEGA2560. Algoritmen har til formål at overvåge solcellesystemet ved at måle effekten fra solcellen, finde det maksimale effektpunkt og levere et passende PWM-signal til en buck-konverter. Der er mange forskellige typer algoritmer til at optimere energiudbyttet fra en solcelle, og i dette projekt er der taget udgangspunkt i en P&O (Perturb & Observe)-algoritme, som er blevet modificeret en smule.
 
     \subsubsection{Implementering}
@@ -103,7 +108,9 @@ Solcelle-delen er den primære leverandør af energi til systemet. Det er derfor
             
             Diode
             En Shotky diode tænkes at anvendes da disse har et lavere fremadrettet spændingsfald. Dette bør føre til en højere effektivitet, og en sådan diode forsøges derfor at vælges i implementeringen.
-            
+
+            Opbygning
+            opbygningen laves på hulprint for at undgå at skade et fumlebræt ved højere effektværdier, samt for at undgå støj på signalerne. Opbygningen kan ses i billede \ref{}
             
         \subsubsection{Test}
             Til test af hardwaren kobles en $68\Omega$ effektmodstand til MPPT-buckconverterens udgang, solpanelet kobles på dens indgang, og en signalgenerator anvendes til at give et 5V PWM-signal til kontrolbenet. Diverse spændinger måles da i systemet og resultaterne som ses i figur \ref{fig: Testresultater MPPT-Buckconverter} fås på baggrund heraf.\newline
@@ -120,15 +127,19 @@ Solcelle-delen er den primære leverandør af energi til systemet. Det er derfor
     \subsection{Delkrav}
         
     \subsection{Designovervejelser}
-            
-            Switch
-
-            Spole
-
-            Kondensator
-
-            Diode
-
+        
+        Switch
+        Udgangsconverteren anvender en bootstrapped nmos switch til at drive buckconverteren. Dette gør i teorien at denne vil kunne opnå næsten samme spænding på udgangen som den har på indgangen i modsætning til den i MPPT'en anvendte buck converter der har et spændingsfald på ca. 2 Volt.
+        
+        Spole/Kondensator/diode
+        Værdierne på spolen og kondensatoren vælges på baggrund af de samme ligninger som anvendes tidligere i afsnit 1.1.3.\newline
+        resultatet er følgende opsætning som set i figur \ref{fig: 5V buck PV}
+        
+        \begin{figure}[H]
+            \includegraphics[width=\textwidth]{Dokumentation/Figures/PV_Buck_x-5V.png}
+            \caption{Diagram over opstillingen af 5V reguleringsbuckconverteren}
+            \label{fig: 5V buck PV}
+        \end{figure}
 
             
     \subsection{Implementering}
@@ -136,6 +147,18 @@ Solcelle-delen er den primære leverandør af energi til systemet. Det er derfor
     \subsection{Test}
         
     \subsection{Delkonklusion}
-        
+
+\section{Test af solcellesystem}
+
+For at lave en test på solcelle-systemet er der målt en række værdier og forskellige loads. Grafen for solcellens spænding og strøm samt spændingen over load over en række forskellige load-modstandsværdier er vist nedenfor.
+
+    \begin{figure}[H]
+        \includegraphics[width=\textwidth]{Dokumentation/Figures/PV_FuldTest.png}
+        \caption{Test af solcelle-system}
+        \label{fig: Test af solcelle-system}
+        \end{figure}
+
+        Diagrammet viser at spændingen bliver holdt på 5V på udgangenstrinnet over forskellige solcelle spændinger og strømme samt forskellige loads. Kredsløbet fungere som ønsket. 
+    
         
 \end{document}
