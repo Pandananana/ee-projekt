@@ -5,12 +5,25 @@
 
 \section{Generator}
 Generatoren består af 2 motorer. DC motoren skal forestille at være en turbine fra et kraftværk der driver en AC generator. Generator er en asynkron 14 polet motor med en 924 rpm/V dette output bliver så forbundet til en 3 phaset transformer. Efter denne transformer bliver det forbundet til en 3 phaset full bridge rectifier. På outputtet af rectifier skal der være 15V samt den skal kunne lever 300mA. Ud fra dette kan den optimale transformer opstilling findens. DC motoren drives af et PWM signal, der kører med så høj frekvens, at det for motorens vedkommende, bliver glattet ud til en specifik spænding.
-\subsection{Transformer}
-\subsection{Fuld bridge rectifier}
-for at omdande det 3 phase output fra transformen til DC bruges der en Fuld bridge rectifier.
-DC spænding kan beskrives ud fra 
-$$ V_{DC} = \frac{2}{\frac{2 \cdot \pi}{6}}\int_{0}^{\frac{\pi}{6}}\sqrt{3}\cdot V_f \cdot cos(\omega t) d(\omega t) = \frac{3 \cdot \sqrt{3}}{\pi} \cdot V_f = 1.654 \cdot V_f $$
 
+\subsection{Fuld bridge rectifier}
+for at omdande det 3 fase output fra transformen til DC bruges der en Fuld bridge rectifier. samt en udglatnings kondensator dette resultere i kredsløbet 
+
+\begin{figure}[H]
+      \includegraphics[width=\textwidth]{Dokumentation/Figures/Rectifyer_dig.png}
+     \caption{Diagram over 3 fase Fuld bridge rectifier}
+     \label{fig: Rectifyer_dig}
+     \end{figure}
+som det kan ses af kredsløbet er der også lavet en spændings deler med indbygget lowpass filter dette bruges til feedback til Arduino som styre Generator. og da arduinoen kun kan klare et signal mellem 0 og 5 volt. og ved  12v på DC motoren er der set op til 25V vælges en 1 til 6 spændings deler så der er 5V buffer.
+for en full bridge rectifier kan DC spænding  beskrives ud fra 
+$$ V_{DC} = \frac{2}{\frac{2 \cdot \pi}{6}}\int_{0}^{\frac{\pi}{6}}\sqrt{3}\cdot V_f \cdot cos(\omega t) d(\omega t) = \frac{3 \cdot \sqrt{3}}{\pi} \cdot V_f = 1.654 \cdot V_{fpp} $$
+og ud fra dette kan vi finde den nødvende output spænidng fra transformerend 
+$$ V_{f}= \frac{15V}{1.654} = 9.068V$$
+ud fra denne information kan transformen designes.
+\subsection{Transformer}
+transformen består af 3 en-fasede ringkerne transformere med Omsætningsforhold 1:8. og kobling kan fridt vælges. da rectifyeren kun har brug for 9V peak per fase for at opnå 15V DC ønskes forstærning at være så lille som mugligt da generatorn har en KV på $ 924 \frac{rpm}{V}$  og dc motor har en tomgang hastighed på 5887 rpm samt vi ønsker at DC motor skal køre ved så høj en rpm som mugligt. af disse grunde vælger vi en transformer koplingen stjerne delta da denne giver den laves muglig forstærknig. eftersom den har minds muglig spænding på primære siden af transformen. samt den på sekundær siden har minds muglig fase spænding dette giver en forstærknig på
+$$ V_{in} =\frac{ V_f \cdot \sqrt{3}}{\frac{N_2}{N_1}} = \frac{9.068V \cdot \sqrt{3}}{\frac{8}{1}} = 1.963V$$
+$$n = \frac{V_f}{V_{in}}=4.618$$
 
 
 
