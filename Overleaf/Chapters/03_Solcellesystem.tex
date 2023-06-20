@@ -110,18 +110,14 @@ Solcelle-delen er den primære leverandør af energi til systemet. Det er derfor
             
             
         \subsubsection{Test}
-        
+            Til test af hardwaren kobles en $68\Omega$ effektmodstand til MPPT-buckconverterens udgang, solpanelet kobles på dens indgang, og en signalgenerator anvendes til at give et 5V PWM-signal til kontrolbenet. Diverse spændinger måles da i systemet og resultaterne som ses i figur \ref{fig: Testresultater MPPT-Buckconverter} fås på baggrund heraf.\newline
+            Det ses her at det er muligt, ved at variere Dutycyclen på PWM signalet, kan vi variere spændingen hen over solpanelet, den strøm det levere, samt forholdet imellem disse værdier. Det ses herudover også i "Effekt/DutyCycle"-grafen, at den leverede effekt variere som følge af den påtrykte dytycycle af PWM signalet til buckconverteren, og at denne herved kan anvendes sammen med et målesystem og en MPPT-algoritme kan optimere den leverede effekt fra solpanelet.
+            
             \begin{figure}[H]
-            \includegraphics[scale = 0.7]{Dokumentation/Figures/PV_buckHardwareTest.png}
+            \includegraphics[scale = 0.8]{Dokumentation/Figures/PV_buckHardwareTest.png}
             \caption{Forskellige itterationer af switch-opsætninger til buck convertere.}
-            \label{fig: Switch designs}
+            \label{fig: Testresultater MPPT-Buckconverter}
             \end{figure}
-            
-            
-        \subsubsection{delkonklusion}
-            
-            
-
                     
 \section{Udgangsconverter}
         
