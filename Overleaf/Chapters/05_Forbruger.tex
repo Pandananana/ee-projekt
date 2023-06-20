@@ -4,7 +4,7 @@
 Forbrugeren er en pulserende belastning, der praktisk talt består af en effekt potentiometer. Der skal implementeres en boost konverter efter energilagret så der kan outputtes en højere og stabil ønsket spænding end hvad energilageret selv kan generere. Ifølge kravspecifikationen skulle der leveres 10 volt til en load. Kontrolleren er den samme som i buck konverteren fra kraftværk sektionen, bare med et par linjer lavet om. 
 
 \section{Boost Konverter}
-Der skal implementeres en boost konverter, ved udgangen af energilagringen. Da energilagret har en spænding på ca 5 volt, skal vi have boostet det op til den ønskede 10 volt load. En boost konverter virker lidt på samme måde som en buck konverter, nemlig ved hjælp af at bestemme en duty cycle som giver den rigtige output spænding
+Der skal implementeres en boost konverter, ved udgangen af energilagringen. Da energilagret har en spænding på ca 5 volt, skal vi have boostet det op til den ønskede 10 volt load. En boost konverter virker lidt på samme måde som en buck konverter, nemlig ved hjælp af at bestemme en duty cycle som giver den rigtige output spænding. Boost konverteren eller step-up konverteren som den også kan hedde består, udover en mosfet transistor også af en spole, en kondensator og en diode, hvor kredsløbet oplader spolen når mosfit transistoren er lukket og ved åben aflader igennem dioden ud til load og kondensator. 
 
 \section{Test}
 Følgende kravspecifikationer tilhører denne del af projektet

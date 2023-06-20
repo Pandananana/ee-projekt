@@ -11,16 +11,19 @@
 
     \subsection{Introduktion}
 
-For at sikre kontinuerlig maksimal effekt fra solcellen anvendes et MPPT-system til at overvåge for varierende forhold og optimere systemet i realtid. Et MPPT-system gør det muligt hele tiden at opnå den størst mulige effekt fra solcellen, således at så lidt effekt som muligt går til spilde. Systemet er blevet realiseret med en Arduino, der overvåger udgangen fra solcellen og genererer et PWM-signal til en buck-konverter som derved kan justere spænding og strøm for at opnå det optimale forhold. 
+    For at sikre kontinuerlig maksimal effekt fra solcellen anvendes et MPPT-system til at overvåge for varierende forhold og optimere systemet i realtid. Et MPPT-system gør det muligt hele tiden at opnå den størst mulige effekt fra solcellen, således at så lidt effekt som muligt går til spilde. Systemet er blevet realiseret med en Arduino, der overvåger udgangen fra solcellen og genererer et PWM-signal til en buck-konverter som derved kan justere spænding og strøm for at opnå det optimale forhold. 
 
     \subsection{MPPT algoritme}
 
-    For at opnå maksimal energiudbytte fra solcellen, benyttes en MPPT-algoritme som er blevet implementeret på en Arduino ATMEGA2560. Algoritmen har til formål at overvåge solcelle-systemet ved at måle effekten fra solcellen, finde det maksimale effekt punkt og levere et passende PWM signal til en buck-konverter. Der er mange forskellige typer algoritmer til at optimere energiudbytte fra en solcelle, og i dette projekt er der taget udgangspunkt i en P\&O (Pertub \& Observe) algoritme, som er blevet modificeret en smule. 
-    
-    Arduionen modtager ADC-målinger fra solcellen, som består i en strømmåling og en spændingsmåling fra et analogt kredsløb. Ud fra dette beregner programmet effekten, husker den forrige effektværdi, og finder forskellen mellem dem. På denne måde er det muligt hele tiden at spore hvilken vej effekten bevæger sig, og korrigere duty-cycle på PWM-signalet til at ligge omkring et arbejdspunkt for maksimal effekt, som bruges af buck-konverteren. Algoritmen afviger fra den originale P\&O-algoritme ved ikke direkte at se på forskelle i spændingsmålinger, og derudover have en variabel til at skifte retning på hvor PWM-signalet bevæger sig hen afhængig af dens placering på den karakteristiske effekt graf for solcellen (vis graf?) Et flowchart for algoritmen er vist i 'flowchart billede...'. 
-    PWM-signalets brug er forklaret i afsnittet \textit{MPPT buck}.
+    For at opnå maksimalt energiudbytte fra solcellen benyttes en MPPT-algoritme, som er blevet implementeret på en Arduino ATMEGA2560. Algoritmen har til formål at overvåge solcellesystemet ved at måle effekten fra solcellen, finde det maksimale effektpunkt og levere et passende PWM-signal til en buck-konverter. Der er mange forskellige typer algoritmer til at optimere energiudbyttet fra en solcelle, og i dette projekt er der taget udgangspunkt i en P&O (Perturb & Observe)-algoritme, som er blevet modificeret en smule.
 
-    Undervejs er der blevet lavet mange ændringer i algoritmen og opsætningen af de forskellige elementer der bruges i programmet. Vi er stødt på mange udfordringer mht. opsætning og behandling af analoge måleværdier, timere generel stabilitet af systemet, og har måtte bruge en del tid på at overkomme disse problemer. Der er til sidst i projektet fundet en effektiv løsning som giver os den ønsket effekt af et MPPT-system.
+    Arduionen modtager ADC-målinger fra solcellen, som består af en strømmåling og en spændingsmåling fra et analogt kredsløb. Ud fra dette beregner programmet effekten, husker den forrige effektværdi og finder forskellen mellem dem. På denne måde er det muligt hele tiden at spore, hvilken vej effekten bevæger sig, og korrigere duty-cyclen på PWM-signalet til at ligge omkring et arbejdspunkt for maksimal effekt, som bruges af buck-konverteren. Algoritmen afviger fra den originale P&O-algoritme ved ikke direkte at se på forskelle i spændingsmålinger og derudover have en variabel til at skifte retning på, hvor PWM-signalet bevæger sig hen afhængig af dens placering på den karakteristiske effektgraf for solcellen (vis graf?). Et flowchart for algoritmen er vist i "flowchart billede...".  PWM-signalets brug er videre forklaret i afsnittet "MPPT buck".
+
+    Indsæt graf og flowchart her
+    
+    Undervejs er der blevet lavet mange ændringer i algoritmen og opsætningen af de forskellige elementer, der bruges i programmet. Vi er stødt på mange udfordringer mht. opsætning og behandling af analoge måleværdier, timere og generel stabilitet af systemet og har måttet bruge en del tid på at overkomme disse problemer. Der er til sidst i projektet fundet en effektiv løsning, som giver os den ønskede effekt af et MPPT-system.
+
+    MPPT-koden er vedhæftet som bilag.
 
 
     \subsection{MPPT buck}
@@ -39,9 +42,15 @@ For at sikre kontinuerlig maksimal effekt fra solcellen anvendes et MPPT-system 
         \subsubsection{Designovervejelser}
             
             Switch
-            I valg af switch overvejes forskellige opsætninger af switches som vist 
+            I valg af switch overvejes forskellige opsætninger af switches som vist i figur \ref{fig: Switch designs}. I figuren ses de forskellige iterationer af switch opsætninger der er blevet anvendt i buck converterne i PV-delen af opsætningen. Figuren viser den første iteration af switch længst til vænstre og nyere versioner mod højre.
+            \newline
+            I iteration 3 anvendes opsætningen som er lavet til en P-kanal med en N-kanal MOSFET. Dette skyldes problemer med den valgte P-kanal mosfet i iteration 2 af valg af switch. Det skal noteres at selv om denne opsætning af switch er den der indgår i den endelige opsætning er dette ikke en optimal løsning da Gate-Source ON spændingen vil føre til et spændingstab på ca. 2 volt over MOSFET'en. Grundet tidsmangel er en mere optimeret opstilling som den set i iteration 4 ikke blevet implementeret.
             
-            
+            \begin{figure}[H]
+            \includegraphics[width=\textwidth]{Dokumentation/Figures/PV_Converter switches.png}
+            \caption{Forskellige itterationer af switch-opsætninger til buck convertere.}
+            \label{fig: Switch designs}
+            \end{figure}
             Spole
             
             
