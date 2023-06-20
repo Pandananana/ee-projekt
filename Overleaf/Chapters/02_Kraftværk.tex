@@ -17,11 +17,11 @@ For at omdanne det 3-fasede output fra transformeren til DC motoren, bruges der 
 Som det kan ses af kredsløbet, er der også lavet en spændingsdeler med indbygget lowpass filter. Dette bruges til feedback til Arduino, som styrer generatoren. Da arduinoens ADC kun kan klare et signal mellem 0 og 5 volt, og da der ved test af DC motoren ved 12 volt er set op til 25V, vælges en 1 til 6 spændingsdeler så der er 5V buffer.
 For en full bridge rectifier kan DC spænding beskrives ud fra 
 $$ V_{DC} = \frac{2}{\frac{2 \cdot \pi}{6}}\int_{0}^{\frac{\pi}{6}}\sqrt{3}\cdot V_f \cdot cos(\omega t) d(\omega t) = \frac{3 \cdot \sqrt{3}}{\pi} \cdot V_f = 1.654 \cdot V_{fpp} $$
-og ud fra dette kan vi finde den nødvendige output spænding fra transformeren 
+og ud fra dette, kan vi finde den nødvendige output spænding fra transformeren 
 $$ V_{f}= \frac{15V}{1.654} = 9.068V$$
 Ud fra denne information kan transformeren designes.
 \subsection{Transformer}
-Transformeren består af 3 en-fasede ringkernetransformere med omsætningsforhold 1:8, og kobling kan frit vælges. Da rectifieren kun har brug for 9V peak per fase for at opnå 15V DC, ønskes forstærkning at være så lille som muligt, da generatorn har en KV på $ 924 \frac{rpm}{V}$  , og dc motor har en tomgangshastighed på 5887 rpm. Endvidere ønsker vi, at DC motor skal køre ved så høj en rpm som muligt for at have den bedste mulighed for at variere hastigheden for at holde de 15V. Af disse grunde vælger vi en transformerkobling i stjerne delta konfiguration, da denne giver den lavest mulige forstærkning, eftersom den har mindst mulig spænding på primær siden af transformeren, ligesom den på sekundær siden har mindst mulig fase spænding. Dette giver en forstærkning på
+Transformeren består af 3 en-fasede ringkernetransformere med omsætningsforhold 1:8, og kobling kan frit vælges. Da rectifieren kun har brug for 9V peak per fase for at opnå 15V DC, ønskes forstærkning at være så lille som muligt, da generatoren har en KV på $ 924 \frac{rpm}{V}$  , og dc motor har en tomgangshastighed på 5887 rpm. Endvidere ønsker vi, at DC motor skal køre ved så høj en rpm som muligt for at have den bedste mulighed for at variere hastigheden for at holde de 15V. Af disse grunde vælger vi en transformerkobling i stjerne delta konfiguration, da denne giver den lavest mulige forstærkning, eftersom den har mindst mulig spænding på primær siden af transformeren, ligesom den på sekundær siden har mindst mulig fase spænding. Dette giver en forstærkning på
 $$ V_{in} =\frac{ V_f \cdot \sqrt{3}}{\frac{N_2}{N_1}} = \frac{9.068V \cdot \sqrt{3}}{\frac{8}{1}} = 1.963V$$
 $$n = \frac{V_f}{V_{in}}=4.618$$
 Ud fra dette får vi en forstærkning på 4.62, og vi kender nu den ønskede indgangsspænding. Ud fra dette kan den forventede rpm findes uden noget load på til
@@ -74,10 +74,18 @@ Da Arduino Mega'en maksimalt kan levere 40mA far et enkelt output, skal der desi
      \end{figure}
 
 \section{Implementering}
-kraftværkets diskrete komponenter implementeres på et samlet print ud fra følge diagram
-
+Kraftværkets diskrete komponenter implementeres på et samlet print ud fra følgende diagram \ref{fig: Kraftverk_diagram_samlet}
+\begin{figure}[H]
+      \includegraphics[width=\textwidth]{Dokumentation/Figures/Kraftverk_diagram_samlet.png}
+     \caption{Diagram over kraftværkets diskrete komponenter}
+     \label{fig: Kraftverk_diagram_samlet}
+     \end{figure}
+Ud fra dette diagram designes et print, og dette fremstilles, se billedet.
+indsæt billede
+Det komplette kraftværk bliver nu samlet, og der laves systemtest, se billedet.
+indsæt billed
 \section{Test}
-Følgende kravspecifikationer tilhører denne del af projektet
+Følgende kravspecifikationer tilhører denne del af projektet:
 \begin{enumerate}
   \item V1 skal være 15V +/- 1 volt for en buck strøm på 100 mA
   \item AC-generator systemet skal kunne levere 300 mA til buck konverteren.
