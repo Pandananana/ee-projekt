@@ -17,16 +17,16 @@ Solcelle-delen er den primære leverandør af energi til systemet. Det er derfor
         Strømmålingen kan realiseres ved en såkaldt shunt-modstand. Princippet bag denne er, at man ønsker en meget lille modstand som man kan måle spændingen over, og derved udregne strømmen der løber igennem den. Da spændingen over den kommer til at være meget lille, kan en op-amp integreres i kredsløbet til at forstærke værdien op.
 
         Spændingsmålingen kan laves ved en simpel spændingsdeler. Men da vi allerede bruger en MCP6002 chip med 2 op-amps i, valgte vi at bruge den anden til spændingsmålingen.
-
-        \begin{figure}[H]
-        \includegraphics[width=\textwidth]{Dokumentation/}
-        \caption{Strøm- og spændingsmåler kredsløb}
-        \label{fig: Strøm- og spændingsmåler kredsløb}
-        \end{figure}
             
         \subsubsection{Implementering}
 
         En effektmodstand på 0,1 ohm er brugt til strømmålingen, hvorefter spændingen over den ganges op med en faktor 75 gennem et op-amp.
+
+        \begin{figure}[H]
+        \includegraphics[width=\textwidth]{Dokumentation/målekredsløb.png}
+        \caption{Strøm- og spændingsmåler kredsløb}
+        \label{fig: Strøm- og spændingsmåler kredsløb}
+        \end{figure}
 
 \section{Maximum Power Point Tracking}
 
@@ -110,8 +110,12 @@ Solcelle-delen er den primære leverandør af energi til systemet. Det er derfor
             
             
         \subsubsection{Test}
-            
-            
+        
+            \begin{figure}[H]
+            \includegraphics[scale = 0.7]{Dokumentation/Figures/PV_buckHardwareTest.png}
+            \caption{Forskellige itterationer af switch-opsætninger til buck convertere.}
+            \label{fig: Switch designs}
+            \end{figure}
             
             
         \subsubsection{delkonklusion}
